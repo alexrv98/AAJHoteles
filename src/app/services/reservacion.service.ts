@@ -7,32 +7,32 @@ import { Injectable } from '@angular/core';
 })
 export class ReservacionService {
 
-  private apiUrl = 'http://localhost/api/';
+  private apiUrl = 'http://localhost/api';  // Cambia la URL a tu servidor
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  // Obtener todos los lugares turísticos
+  // Obtener lugares turísticos
   getLugares(): Observable<any> {
-    return this.http.get(`${this.apiUrl}listLugaresTuristicos.php`);
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
   }
 
-  // Obtener hoteles de un lugar específico
-  getHoteles(lugarId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}listHoteles.php?lugar_id=${lugarId}`);
+  // Obtener hoteles por lugar_id
+  getHoteles(lugar_id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listHoteles.php?lugar_id=${lugar_id}`);
   }
 
-  // Obtener habitaciones disponibles en un hotel
-  getHabitaciones(hotelId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}listHabitaciones.php?hotel_id=${hotelId}`);
+  // Obtener habitaciones por hotel_id
+  getHabitaciones(hotel_id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listHabitaciones.php?hotel_id=${hotel_id}`);
   }
 
   // Obtener tipos de habitaciones
-  getTiposHabitaciones(): Observable<any> {
-    return this.http.get(`${this.apiUrl}listTipoHabitacion.php`);
+  getTiposHabitacion(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listTipoHabitacion.php`);
   }
 
-  // Enviar una reservación
-  hacerReservacion(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}reservaciones.php`, data);
+  // Hacer una reservación
+  hacerReservacion(reservacion: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reservacion.php`, reservacion);
   }
 }
