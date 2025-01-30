@@ -1,1 +1,27 @@
-<p>usuario works!</p>
+<div class="container">
+  <h2>Reservar una Habitación</h2>
+
+  <label for="lugar">Lugar Turístico:</label>
+  <select id="lugar" [(ngModel)]="seleccion.lugarId" (change)="cargarHoteles()">
+    <option *ngFor="let lugar of lugares" [value]="lugar.id">{{ lugar.nombre }}</option>
+  </select>
+
+  <label for="hotel">Hotel:</label>
+  <select id="hotel" [(ngModel)]="seleccion.hotelId" (change)="cargarHabitaciones()">
+    <option *ngFor="let hotel of hoteles" [value]="hotel.id">{{ hotel.nombre }}</option>
+  </select>
+
+  <label for="tipoHabitacion">Tipo de Habitación:</label>
+  <select id="tipoHabitacion" [(ngModel)]="seleccion.tipoHabitacionId">
+    <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">{{ tipo.nombre }}</option>
+  </select>
+
+  <label for="habitacion">Número de Habitación:</label>
+  <select id="habitacion" [(ngModel)]="seleccion.habitacionId">
+    <option *ngFor="let habitacion of habitaciones" [value]="habitacion.id">
+      {{ habitacion.numero_habitacion }} - {{ habitacion.disponibilidad ? 'Disponible' : 'Ocupada' }}
+    </option>
+  </select>
+
+  <button (click)="hacerReservacion()">Reservar</button>
+</div>
