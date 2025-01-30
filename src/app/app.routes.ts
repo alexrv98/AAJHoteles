@@ -5,6 +5,7 @@ import { UsuarioComponent } from './componentes/usuario/usuario.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { HomeComponent } from './componentes/home/home.component';
+import { reservationComponent } from './componentes/reservation/reservation.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -20,6 +21,11 @@ export const routes: Routes = [
     component: UsuarioComponent,
     canActivate: [AuthGuard],
     title: 'usuario',
+  },
+  {
+    path: 'reservacion',
+    component: reservationComponent,
+    title: 'reservacion',
   },
   { path: 'registro', component: RegistroComponent, title: 'registro' },
 ];
