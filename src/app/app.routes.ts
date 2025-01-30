@@ -7,6 +7,7 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { HotelesComponent } from './componentes/administrador/hoteles/hoteles.component';
 import { HabitacionesComponent } from './componentes/administrador/hoteles/habitaciones/habitaciones.component';
 import { HomeComponent } from './componentes/home/home.component';
+import { reservationComponent } from './componentes/usuario/reservation/reservation.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -38,6 +39,12 @@ export const routes: Routes = [
     component: UsuarioComponent,
     canActivate: [AuthGuard],
     title: 'usuario',
+  },
+  {
+    path: 'reservacion',
+    component: reservationComponent,
+    title: 'Reservación',
+    canActivate: [AuthGuard],
   },
   { path: 'registro', component: RegistroComponent, title: 'registro' },
 ];

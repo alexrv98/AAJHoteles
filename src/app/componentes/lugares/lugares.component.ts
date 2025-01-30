@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { LugaresService } from '../../services/lugares.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-lugares',
-  imports: [CommonModule, RouterModule, RouterLink],
+  imports: [CommonModule, RouterModule],
   templateUrl: './lugares.component.html',
   styleUrl: './lugares.component.css',
 })
