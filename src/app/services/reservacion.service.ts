@@ -21,7 +21,7 @@ export class ReservacionService {
     }
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : '',  // Si hay token, agregarlo en el encabezado
-      'Content-Type': 'application/json' // Otras cabeceras necesarias
+      'Content-Type': 'application/json' // Otras cabeceras necesar
     });
   }
 
