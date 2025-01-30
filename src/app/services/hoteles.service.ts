@@ -40,6 +40,8 @@ export class HotelesService {
     // La URL debería incluir el ID del hotel en la query
     return this.http.delete<any>(`${this.apiUrl}/eliminarHotel.php?id=${id}`, { headers });
   }
+
+  
   
 
   

@@ -1,1 +1,120 @@
-<p>habitaciones works!</p>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Habitaciones Disponibles</h2>
+      <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Habitación</button>
+    </div>
+
+    <div *ngIf="habitaciones.length > 0; else noHabitaciones">
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>Número</th>
+            <th>Tipo</th>
+            <th>Personas</th>
+            <th>Camas</th>
+            <th>Precio</th>
+            <th>Disponibilidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let habitacion of habitaciones">
+            <td>{{ habitacion.numero_habitacion }}</td>
+            <td>{{ habitacion.tipo }}</td>
+            <td>{{ habitacion.capacidad }}</td>
+            <td>{{ habitacion.camas }}</td>
+            <td>{{ habitacion.precio | currency }}</td>
+            <td>
+              <span class="badge bg-success" *ngIf="habitacion.disponibilidad">Disponible</span>
+              <span class="badge bg-danger" *ngIf="!habitacion.disponibilidad">Ocupada</span>
+            </td>
+            <td>
+                <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(habitacion)">Editar</button>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noHabitaciones>
+      <p>No hay habitaciones disponibles para este hotel.</p>
+    </ng-template>
+</div>
+<!-- Modal para agregar habitación -->
+<div *ngIf="mostrarModalAgregar" class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Habitación</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="guardarHabitacion()">
+            <div class="mb-3">
+              <label class="form-label">Número de Habitación</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevaHabitacion.numero_habitacion" name="numero_habitacion" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Precio</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevaHabitacion.precio" name="precio" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Disponibilidad</label>
+              <select class="form-control" [(ngModel)]="nuevaHabitacion.disponibilidad" name="disponibilidad">
+                <option [value]="1">Disponible</option>
+                <option [value]="0">No Disponible</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Tipo de Habitación</label>
+              <select class="form-control" [(ngModel)]="nuevaHabitacion.tipo_habitacion_id" name="tipo_habitacion_id" required>
+                <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">{{ tipo.nombre }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal para editar habitación -->
+  <div *ngIf="habitacionSeleccionada" class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Habitación</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Número de Habitación</label>
+              <input type="text" class="form-control" [(ngModel)]="habitacionSeleccionada.numero_habitacion" name="numero_habitacion" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Tipo de Habitación</label>
+              <select class="form-control" [(ngModel)]="habitacionSeleccionada.tipo_habitacion_id" name="tipo_habitacion_id">
+                <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">{{ tipo.nombre }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Precio</label>
+              <input type="number" class="form-control" [(ngModel)]="habitacionSeleccionada.precio" name="precio" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Disponibilidad</label>
+              <select class="form-control" [(ngModel)]="habitacionSeleccionada.disponibilidad" name="disponibilidad">
+                <option [value]="1">Disponible</option>
+                <option [value]="0">Ocupada</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="editarHabitacion()">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" (click)="cerrarModalEditar()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

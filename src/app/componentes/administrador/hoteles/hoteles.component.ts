@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HotelesService } from '../../../services/hoteles.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-hoteles',
   templateUrl: './hoteles.component.html',
-  imports:[CommonModule, FormsModule],
+  imports:[CommonModule, FormsModule, RouterLink],
   styleUrls: ['./hoteles.component.css']
 })
 export class HotelesComponent implements OnInit {
