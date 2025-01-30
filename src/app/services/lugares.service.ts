@@ -1,22 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Lugares } from './lugares';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class LugaresService {
+  private apiUrl = 'http://localhost/sistemaExam/api'; 
+
   constructor(private http: HttpClient) {}
 
-  url = 'http://192.168.1.111/api/listLugaresTuristicos.php';
+  obtenerLugares(): Observable<any> {
+    const token = localStorage.getItem('authToken'); 
+    const headers = { Authorization: `Bearer ${token}` };
 
-  async getAllLugares(): Promise<Lugares[]> {
-    const data = await fetch(this.url);
-    return await data.json();
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`, { headers });
   }
 
-  async getLugaresById(id: number): Promise<Lugares | undefined> {
-    const data = await fetch(`${this.url}/${id}`);
-    return (await data.json()) ?? {};
+  addLugar(lugar: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.post<any>(`${this.apiUrl}/agregarLugaresTuristicos.php`, lugar, { headers });
   }
+  
+
+  updateLugar(lugar: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+    return this.http.put<any>(`${this.apiUrl}/editLugaresTuristicos.php/${lugar.id}`, lugar, { headers });
+  }
+
+
+  eliminarLugar(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete<any>(`${this.apiUrl}/eliminarLugaresTuristicos.php/${id}`,
+       { headers });
+  }
+  
+
+  agregarLugar(lugar: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    // Enviar los datos del nuevo lugar a la API mediante POST
+    return this.http.post<any>(`${this.apiUrl}/agregarLugaresTuristicos.php`, lugar, { headers });
+  }
+  
+  
+  
+  
+
+  
 }
