@@ -18,17 +18,17 @@ export class ReservacionService {
 
   // Obtener hoteles de un lugar específico
   getHoteles(lugarId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}hoteles.php?lugar_id=${lugarId}`);
+    return this.http.get(`${this.apiUrl}listHoteles.php?lugar_id=${lugarId}`);
   }
 
   // Obtener habitaciones disponibles en un hotel
   getHabitaciones(hotelId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}habitaciones.php?hotel_id=${hotelId}`);
+    return this.http.get(`${this.apiUrl}listHabitaciones.php?hotel_id=${hotelId}`);
   }
 
   // Obtener tipos de habitaciones
   getTiposHabitaciones(): Observable<any> {
-    return this.http.get(`${this.apiUrl}tipos_habitacion.php`);
+    return this.http.get(`${this.apiUrl}listTipoHabitacion.php`);
   }
 
   // Enviar una reservación
