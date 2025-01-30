@@ -8,7 +8,7 @@ function verificarToken() {
             "status" => "error",
             "message" => "Token no proporcionado"
         ]);
-        http_response_code(401); 
+        http_response_code(401);
         exit;
     }
 
