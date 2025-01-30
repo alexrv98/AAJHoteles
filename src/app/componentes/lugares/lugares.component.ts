@@ -1,6 +1,6 @@
-import { HomeComponent } from './../home/home.component';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Lugares } from '../../services/lugares';
 
 @Component({
   selector: 'app-lugares',
@@ -8,4 +8,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './lugares.component.html',
   styleUrl: './lugares.component.css',
 })
-export class LugaresComponent {}
+export class LugaresComponent {
+  @Input() lugares!: Lugares;
+}
