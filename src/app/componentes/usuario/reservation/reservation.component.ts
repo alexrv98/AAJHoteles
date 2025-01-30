@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservacionService } from '../../services/reservacion.service';
+import { ReservacionService } from '../../../services/reservacion.service';
+import { Router } from '@angular/router';  // Importar Router
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,11 +21,17 @@ export class reservationComponent implements OnInit {
   tipoHabitacionId: number = 0;
   habitacionId: number = 0;
 
-  constructor(private usuarioService: ReservacionService) { }
+  constructor(private usuarioService: ReservacionService, private router: Router) { }
 
   ngOnInit(): void {
-    this.cargarLugares();
-    this.cargarTiposHabitacion();
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      // Si no hay token, redirige al usuario al login
+      this.router.navigate(['/login']);
+    } else {
+      this.cargarLugares();
+      this.cargarTiposHabitacion();
+    }
   }
 
   cargarLugares() {

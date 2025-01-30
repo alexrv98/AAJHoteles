@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';  // Importar Router
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,18 @@ export class ReservacionService {
 
   private apiUrl = 'http://localhost/api';  // Cambia la URL a tu servidor
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   // Crear los encabezados con el token de autenticación
   private crearHeaders() {
     const token = localStorage.getItem('authToken'); // Obtener el token del localStorage
+    if (!token) {
+      // Si no hay token, redirige al login
+      this.router.navigate(['/login']);
+    }
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : '',  // Si hay token, agregarlo en el encabezado
-      'Content-Type': 'application/json' // Otras cabeceras necesarias
+      'Content-Type': 'application/json' // Otras cabeceras necesar
     });
   }
 
