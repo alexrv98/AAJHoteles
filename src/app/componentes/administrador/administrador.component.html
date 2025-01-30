@@ -1,1 +1,114 @@
-<p>administrador works!</p>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Lugares Turísticos</h2>
+      <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Lugar</button>
+    </div>
+  
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Ubicación</th>
+              <th>Imagen</th>
+              <th>Hoteles</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lugar of lugares">
+              <td>{{ lugar.id }}</td>
+              <td>{{ lugar.nombre }}</td>
+              <td>{{ lugar.descripcion }}</td>
+              <td>{{ lugar.ubicacion }}</td>
+              <td>
+                <img *ngIf="lugar.imagen" [src]="lugar.imagen" alt="{{ lugar.nombre }}" class="img-thumbnail" width="100">
+              </td>
+              <td>
+                <a [routerLink]="['/hoteles', lugar.id]" class="btn btn-info btn-sm">
+                  <i class="bi bi-building"></i> Ver
+                </a>
+              </td>
+              <td>
+                <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(lugar)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarLugar(lugar.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    
+  
+    <!-- Modal de Edición -->
+    <div class="modal fade show" tabindex="-1" [ngClass]="{'d-block': mostrarModal}" *ngIf="mostrarModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Lugar</h5>
+            <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="lugarSeleccionado.nombre" name="nombre">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" [(ngModel)]="lugarSeleccionado.descripcion" name="descripcion"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Ubicación</label>
+                <input type="text" class="form-control" [(ngModel)]="lugarSeleccionado.ubicacion" name="ubicacion">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Imagen (URL)</label>
+                <input type="text" class="form-control" [(ngModel)]="lugarSeleccionado.imagen" name="imagen" placeholder="Ingrese la URL de la imagen">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+            <button class="btn btn-success" (click)="guardarEdicion()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+    <!-- Modal de agregar lugar -->
+  <div *ngIf="mostrarModalAgregar" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Lugar Turístico</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+        </div>
+        <div class="modal-body">
+          <form #formAgregar="ngForm" (ngSubmit)="guardarNuevoLugar(formAgregar)">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevoLugar.nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" [(ngModel)]="nuevoLugar.descripcion" name="descripcion" required>
+            </div>
+            <div class="mb-3">
+              <label for="ubicacion" class="form-label">Ubicación</label>
+              <input type="text" id="ubicacion" class="form-control" [(ngModel)]="nuevoLugar.ubicacion" name="ubicacion" required>
+            </div>
+            <div class="mb-3">
+              <label for="imagen" class="form-label">Imagen (URL)</label>
+              <input type="text" id="imagen" class="form-control" [(ngModel)]="nuevoLugar.imagen" name="imagen" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
