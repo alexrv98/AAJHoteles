@@ -83,6 +83,11 @@ export class reservationComponent implements OnInit {
   }
 
   enviarReserva() {
+    if (!this.lugarId || !this.hotelId || !this.tipoHabitacionId || !this.habitacionId) {
+      console.error("Todos los campos deben ser seleccionados.");
+      return;
+    }
+
     const reservacion = {
       lugar_id: this.lugarId,
       hotel_id: this.hotelId,
@@ -99,4 +104,6 @@ export class reservationComponent implements OnInit {
       }
     );
   }
+
+
 }
