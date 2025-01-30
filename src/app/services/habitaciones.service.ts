@@ -13,11 +13,43 @@ export class HabitacionesService {
   getHabitacionesPorHotel(hotelId: number): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const params = { lugar_id: hotelId.toString() };
 
-    return this.http.get(`${this.apiUrl}/listHabitaciones.php`, {
+    return this.http.get<any>(
+      `${this.apiUrl}/listHabitaciones.php?hotel_id=${hotelId}`,
+      { headers }
+    );
+  }
+
+  agregarHabitacion(habitacion: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    console.log('📤 Enviando datos a la API:', habitacion);
+
+    return this.http.post<any>(
+      `${this.apiUrl}/agregarHabitacion.php`,
+      habitacion,
+      { headers }
+    );
+  }
+
+  getTiposHabitacion(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any>(`${this.apiUrl}/obtenerTiposHabitacion.php`, {
       headers,
-      params,
     });
+  }
+
+  editarHabitacion(habitacion: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<any>(
+      `${this.apiUrl}/editarHabitacion.php`,
+      habitacion,
+      { headers }
+    );
   }
 }
