@@ -17,3 +17,4 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent, title: 'registro' },
   { path: 'reservacion', component: reservationComponent, title: 'reservación', canActivate: [AuthGuard] },
 ];
+//hola
