@@ -13,69 +13,59 @@ import { OnInit } from '@angular/core';
 export class UsuarioComponent implements OnInit{
   lugares: any[] = [];
   hoteles: any[] = [];
-  habitaciones: any[] = [];
   tiposHabitacion: any[] = [];
+  habitaciones: any[] = [];
 
-  seleccion = {
-    lugarId: '',
-    hotelId: '',
-    tipoHabitacionId: '',
-    habitacionId: ''
-  };
+  lugarId: number;
+  hotelId: number;
+  tipoHabitacionId: number;
+  habitacionId: number;
 
-  constructor(private reservacionService: ReservacionService) {}
+  constructor(private usuarioService: ReservacionService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.cargarLugares();
+    this.cargarTiposHabitacion();
   }
 
   cargarLugares() {
-    this.reservacionService.getLugares().subscribe(response => {
-      if (response.status === 'success') {
-        this.lugares = response.data;
-      }
+    this.usuarioService.getLugares().subscribe((data: any) => {
+      this.lugares = data.data;
     });
   }
 
   cargarHoteles() {
-    this.reservacionService.getHoteles(this.seleccion.lugarId).subscribe(response => {
-      if (response.status === 'success') {
-        this.hoteles = response.data;
-      }
-    });
+    if (this.lugarId) {
+      this.usuarioService.getHoteles(this.lugarId).subscribe((data: any) => {
+        this.hoteles = data.data;
+      });
+    }
   }
 
   cargarHabitaciones() {
-    this.reservacionService.getHabitaciones(this.seleccion.hotelId).subscribe(response => {
-      if (response.status === 'success') {
-        this.habitaciones = response.data;
-      }
+    if (this.hotelId) {
+      this.usuarioService.getHabitaciones(this.hotelId).subscribe((data: any) => {
+        this.habitaciones = data.data;
+      });
+    }
+  }
+
+  cargarTiposHabitacion() {
+    this.usuarioService.getTiposHabitacion().subscribe((data: any) => {
+      this.tiposHabitacion = data.data;
     });
   }
 
-  cargarTiposHabitaciones() {
-    this.reservacionService.getTiposHabitaciones().subscribe(response => {
-      if (response.status === 'success') {
-        this.tiposHabitacion = response.data;
-      }
-    });
-  }
-
-  hacerReservacion() {
-    const datosReservacion = {
-      lugar_id: this.seleccion.lugarId,
-      hotel_id: this.seleccion.hotelId,
-      tipo_habitacion_id: this.seleccion.tipoHabitacionId,
-      habitacion_id: this.seleccion.habitacionId,
-      usuario_id: 1 // Reemplázalo con el ID real del usuario autenticado
+  enviarReserva() {
+    const reservacion = {
+      lugar_id: this.lugarId,
+      hotel_id: this.hotelId,
+      tipo_habitacion_id: this.tipoHabitacionId,
+      habitacion_id: this.habitacionId
     };
 
-    this.reservacionService.hacerReservacion(datosReservacion).subscribe(response => {
-      if (response.status === 'success') {
-        alert('¡Reservación realizada con éxito!');
-      } else {
-        alert('Error al hacer la reservación.');
-      }
+    this.usuarioService.hacerReservacion(reservacion).subscribe((data: any) => {
+      console.log('Reserva realizada con éxito', data);
     });
   }
 }
