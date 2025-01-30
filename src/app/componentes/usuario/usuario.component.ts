@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { ReservacionService } from '../../services/reservacion.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +16,10 @@ export class UsuarioComponent implements OnInit{
   tiposHabitacion: any[] = [];
   habitaciones: any[] = [];
 
-  lugarId: number;
-  hotelId: number;
-  tipoHabitacionId: number;
-  habitacionId: number;
+  lugarId: number=0;
+  hotelId: number=0;
+  tipoHabitacionId: number=0;
+  habitacionId: number=0;
 
   constructor(private usuarioService: ReservacionService) { }
 
