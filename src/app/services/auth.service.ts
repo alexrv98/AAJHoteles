@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost/api/';
+  private apiUrl = 'http://192.168.1.111/api/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(correo: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login.php`, { correo, password });
@@ -18,7 +18,6 @@ export class AuthService {
     localStorage.setItem('authToken', token);
     localStorage.setItem('userRole', role);
     localStorage.setItem('userName', name);
-
   }
 
   getToken(): string | null {
@@ -29,17 +28,13 @@ export class AuthService {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
     localStorage.removeItem('Username');
-
   }
 
   register(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register.php`, data);
   }
 
-
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
   }
-
-
 }
