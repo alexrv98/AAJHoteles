@@ -14,6 +14,7 @@ export class ReservacionService {
   // Crear los encabezados con el token de autenticación
   private crearHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken'); // Obtener el token del localStorage
+    console.log("Token enviado:", token);  // Agregar un log para verificar el token
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : '',  // Si hay token, agregarlo en el encabezado
       'Content-Type': 'application/json' // Otras cabeceras necesarias
