@@ -4,12 +4,22 @@ import { AdministradorComponent } from './componentes/administrador/administrado
 import { UsuarioComponent } from './componentes/usuario/usuario.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegistroComponent } from './componentes/registro/registro.component';
-
+import { HomeComponent } from './componentes/home/home.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], title:'admin' },
-  { path: 'usuario', component: UsuarioComponent, canActivate: [AuthGuard], title:'usuario' },
-  { path: 'registro', component: RegistroComponent, title:'registro' },
-
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent },
+  {
+    path: 'admin',
+    component: AdministradorComponent,
+    canActivate: [AuthGuard],
+    title: 'admin',
+  },
+  {
+    path: 'usuario',
+    component: UsuarioComponent,
+    canActivate: [AuthGuard],
+    title: 'usuario',
+  },
+  { path: 'registro', component: RegistroComponent, title: 'registro' },
 ];

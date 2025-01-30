@@ -1,4 +1,14 @@
-<div class="login-container">
+<main>
+  <nav class="navbar navbar-light bg-light">
+    <div
+      class="container-fluid d-flex justify-content-between align-items-center"
+    >
+      <a routerLink="/">
+        <img class="brand-logo" src="assets/logo.svg" alt="logo" />
+      </a>
+    </div>
+  </nav>
+  <div class="login-container">
     <div class="login-card">
       <h2>Iniciar Sesión</h2>
       <form (ngSubmit)="onLogin()">
@@ -28,8 +38,10 @@
         <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
       </form>
       <div class="register-link">
-        <p>¿No tienes una cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
+        <p>
+          ¿No tienes una cuenta? <a routerLink="/registro">Regístrate aquí</a>
+        </p>
       </div>
     </div>
   </div>
-  
+</main>

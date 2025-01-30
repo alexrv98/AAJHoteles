@@ -1,1 +1,33 @@
-<p>home works!</p>
+<main>
+  <nav class="navbar navbar-light bg-light">
+    <div
+      class="container-fluid d-flex justify-content-between align-items-center"
+    >
+      <a routerLink="/">
+        <img class="brand-logo" src="assets/logo.svg" alt="logo" />
+      </a>
+
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Buscar"
+          aria-label="Buscar"
+        />
+        <button class="btn btn-outline-primary me-2" type="submit">
+          Buscar
+        </button>
+      </form>
+
+      <div>
+        <button
+          class="btn btn-outline-primary me-2"
+          [routerLink]="['/login']"
+          routerLinkActive="router-link-active"
+        >
+          Inicio de sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+</main>
