@@ -1,0 +1,120 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Hoteles en este lugar</h2>
+      <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Hotel</button>
+    </div>
+
+<div class="container">
+  
+    <div *ngIf="hoteles.length > 0; else noHoteles">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+              <th>Max de personas</th>
+              <th>Habitaciones</th> 
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hotel of hoteles">
+              <td>{{ hotel.nombre }}</td>
+              <td>{{ hotel.descripcion }}</td>
+              <td>{{ hotel.direccion }}</td>
+              <td>{{ hotel.telefono }}</td>
+              <td>{{ hotel.estrellas }}</td>
+              <td>
+                <!-- Botón para redirigir a la vista de habitaciones -->
+                <button class="btn btn-info btn-sm">Ver</button>
+              </td>
+              <td>
+                <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(hotel)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarHotel(hotel.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <ng-template #noHoteles>
+        <p>No hay hoteles disponibles para este lugar.</p>
+      </ng-template>
+      
+  <!-- Modal de agregar -->
+<div *ngIf="mostrarModalAgregar" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Hotel</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+        </div>
+        <div class="modal-body">
+          <form #formAgregar="ngForm" (ngSubmit)="guardarNuevoHotel(formAgregar)">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevoHotel.nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" [(ngModel)]="nuevoHotel.descripcion" name="descripcion" required>
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" id="direccion" class="form-control" [(ngModel)]="nuevoHotel.direccion" name="direccion" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="text" id="telefono" class="form-control" [(ngModel)]="nuevoHotel.telefono" name="telefono" required>
+            </div>
+            <div class="mb-3">
+              <label for="estrellas" class="form-label">Max. de personas</label>
+              <input type="number" id="estrellas" class="form-control" [(ngModel)]="nuevoHotel.estrellas" name="estrellas" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Modal de edición -->
+<div *ngIf="mostrarModalEditar" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Hotel</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
+        </div>
+        <div class="modal-body">
+          <form #formEditar="ngForm" (ngSubmit)="guardarEdicion()">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" [(ngModel)]="hotelSeleccionado.nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" [(ngModel)]="hotelSeleccionado.descripcion" name="descripcion" required>
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" id="direccion" class="form-control" [(ngModel)]="hotelSeleccionado.direccion" name="direccion" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="text" id="telefono" class="form-control" [(ngModel)]="hotelSeleccionado.telefono" name="telefono" required>
+            </div>
+            <div class="mb-3">
+              <label for="estrellas" class="form-label">Max. de personas</label>
+              <input type="number" id="estrellas" class="form-control" [(ngModel)]="hotelSeleccionado.estrellas" name="estrellas" required>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
