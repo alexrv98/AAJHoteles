@@ -6,15 +6,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { HotelesComponent } from './componentes/administrador/hoteles/hoteles.component';
 import { HabitacionesComponent } from './componentes/administrador/hoteles/habitaciones/habitaciones.component';
-<<<<<<< HEAD
 import { HomeComponent } from './componentes/home/home.component';
-=======
->>>>>>> 66e8f57ce9ac08ac20a564ade1203ff7b41871ca
 import { reservationComponent } from './componentes/usuario/reservation/reservation.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
-<<<<<<< HEAD
   {
     path: 'home',
     component: HomeComponent,
@@ -51,12 +47,35 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'registro', component: RegistroComponent, title: 'registro' },
-=======
-  { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], title: 'admin' },
-  { path: 'hoteles/:id', component: HotelesComponent, canActivate: [AuthGuard], title: 'hoteles' },
-  { path: 'habitaciones/:id', component: HabitacionesComponent, canActivate: [AuthGuard], title: 'habitaciones' },
-  { path: 'usuario', component: UsuarioComponent, canActivate: [AuthGuard], title: 'usuario' },
+  {
+    path: 'admin',
+    component: AdministradorComponent,
+    canActivate: [AuthGuard],
+    title: 'admin',
+  },
+  {
+    path: 'hoteles/:id',
+    component: HotelesComponent,
+    canActivate: [AuthGuard],
+    title: 'hoteles',
+  },
+  {
+    path: 'habitaciones/:id',
+    component: HabitacionesComponent,
+    canActivate: [AuthGuard],
+    title: 'habitaciones',
+  },
+  {
+    path: 'usuario',
+    component: UsuarioComponent,
+    canActivate: [AuthGuard],
+    title: 'usuario',
+  },
   { path: 'registro', component: RegistroComponent, title: 'registro' },
-  { path: 'reservacion', component: reservationComponent, title: 'reservación', canActivate: [AuthGuard] },
->>>>>>> 66e8f57ce9ac08ac20a564ade1203ff7b41871ca
+  {
+    path: 'reservacion',
+    component: reservationComponent,
+    title: 'reservación',
+    canActivate: [AuthGuard],
+  },
 ];
