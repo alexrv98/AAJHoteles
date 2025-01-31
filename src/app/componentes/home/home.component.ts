@@ -9,10 +9,10 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private authService: AuthService) {} 
+  constructor(private authService: AuthService) {}
 
   logout(): void {
-    this.authService.logout(); 
-    window.location.reload(); 
+    this.authService.logout();
+    window.location.reload();
   }
 }

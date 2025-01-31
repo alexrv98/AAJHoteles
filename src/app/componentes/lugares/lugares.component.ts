@@ -1,27 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { LugaresService } from '../../services/lugares.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lugares',
-  imports: [CommonModule, RouterModule],
+  standalone: true, // Si es standalone component
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './lugares.component.html',
-  styleUrl: './lugares.component.css',
+  styleUrls: ['./lugares.component.css'], // styleUrls en plural
 })
 export class LugaresComponent implements OnInit {
   lugares: any[] = [];
-  // lugarSeleccionado: any = {};
-  // mostrarModal: boolean = false;
-  // isEditMode: boolean = false;
-  // mostrarModalAgregar: boolean = false;
-  // nuevoLugar: any = {
-  //   nombre: '',
-  //   descripcion: '',
-  //   ubicacion: '',
-  //   imagen: '',
-  // };
-  constructor(private lugaresService: LugaresService) {}
+  lugaresFiltrados: any[] = [];
+  textoBusqueda: string = ''; // Almacena el texto del input
+
+  // Usar inyección con `inject()`
+  lugaresService: LugaresService = inject(LugaresService);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.obtenerLugares();
@@ -32,6 +30,7 @@ export class LugaresComponent implements OnInit {
       next: (response) => {
         if (response.status === 'success') {
           this.lugares = response.data;
+          this.lugaresFiltrados = response.data; // Aseguramos que los lugares filtrados se llenen
         } else {
           console.error('Error al obtener lugares:', response.message);
         }
@@ -40,5 +39,18 @@ export class LugaresComponent implements OnInit {
         console.error('Error en la petición:', error);
       },
     });
+  }
+
+  buscar(event: Event): void {
+    event.preventDefault(); // Evita que el formulario recargue la página
+
+    if (!this.textoBusqueda) {
+      this.lugaresFiltrados = this.lugares;
+      return;
+    }
+
+    this.lugaresFiltrados = this.lugares.filter((lugar) =>
+      lugar.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+    );
   }
 }
