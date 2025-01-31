@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ReservacionService {
-  private apiUrl = 'http://192.168.1.111/api';
+  private apiUrl = 'http://localhost/api/';
 
   constructor(private http: HttpClient) {}
 
@@ -52,7 +52,7 @@ export class ReservacionService {
 
   // Hacer una reservación
   hacerReservacion(reservacion: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reservacion.php`, reservacion, {
+    return this.http.post(`${this.apiUrl}/reservaciones.php`, reservacion, {
       headers: this.crearHeaders(),
     });
   }

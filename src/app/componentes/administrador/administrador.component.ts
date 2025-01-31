@@ -32,20 +32,21 @@ export class AdministradorComponent implements OnInit {
     this.obtenerLugares();
   }
   abrirModalAgregar(): void {
-    this.lugarSeleccionado = {
-      nombre: '',
-      descripcion: '',
-      ubicacion: '',
-      imagen: ''
-    };
-    this.mostrarModal = true; 
-  }
+  this.isEditMode = false; // Asegurar que no esté en modo edición
+  this.nuevoLugar = {
+    nombre: '',
+    descripcion: '',
+    ubicacion: '',
+    imagen: ''
+  };
+  this.mostrarModalAgregar = true; 
+}
   
 
-  cerrarModalAgregar(): void {
-    this.mostrarModalAgregar = false;
-  }
-
+cerrarModalAgregar(): void {
+  this.mostrarModalAgregar = false;
+  this.isEditMode = false; // Resetear modo edición
+}
 
     
 

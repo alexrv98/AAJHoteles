@@ -97,13 +97,21 @@ export class reservationComponent implements OnInit {
 
     this.usuarioService.hacerReservacion(reservacion).subscribe(
       (data: any) => {
-        console.log('Reserva realizada con éxito', data);
+        if (data.status === 'error' && data.message === 'La habitación ya está reservada') {
+          console.error('La habitación ya está reservada. Por favor, elija otra habitación.');
+          alert('La habitación ya está reservada. Por favor, elija otra habitación.');
+        } else if (data.status === 'success') {
+          console.log('Reserva realizada con éxito', data);
+          alert('Reserva realizada con éxito');
+        }
       },
       error => {
         console.error('Error al hacer la reservación', error);
+        alert('Error al hacer la reservación. Intente de nuevo más tarde.');
       }
     );
   }
+
 
 
 }
