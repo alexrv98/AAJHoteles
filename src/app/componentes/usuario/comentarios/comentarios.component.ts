@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './comentarios.component.html',
   styleUrl: './comentarios.component.css'
 })
+
 export class ComentariosComponent implements OnInit {
   lugares: any[] = [];
   hoteles: any[] = [];
