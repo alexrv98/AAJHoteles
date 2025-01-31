@@ -3,7 +3,6 @@ import { GestionreservacionesService } from '../../../services/gestionreservacio
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from '../../home/home.component';
 import { FormsModule } from '@angular/forms';
-import { Routes } from '@angular/router';
 
 @Component({
   selector: 'app-gesion-reservaciones',
@@ -23,7 +22,7 @@ export class GesionReservacionesComponent implements OnInit {
   }
 
   obtenerReservaciones(): void {
-    this.GestionreservacionesService.obtenerReservaciones().subscribe(
+    this.GestionreservacionesService.obtenerReservacionesCompleto().subscribe(
       (response) => {
         if (response.status === 'success') {
           this.reservaciones = response.data;

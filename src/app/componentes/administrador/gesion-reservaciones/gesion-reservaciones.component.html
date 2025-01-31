@@ -8,6 +8,9 @@
       <thead class="table-light">
         <tr>
           <th>No</th>
+          <th>Usuario</th>
+          <th>Hotel</th>
+          <th>Lugar Turístico</th>
           <th>Habitación</th>
           <th>Tipo de Habitación</th>
           <th>Capacidad</th>
@@ -22,6 +25,9 @@
       <tbody>
         <tr *ngFor="let reservacion of reservaciones; let i = index">
           <td>{{ i + 1 }}</td> <!-- Numeración secuencial -->
+          <td>{{ reservacion.nombre_usuario }}</td>
+          <td>{{ reservacion.nombre_hotel }}</td>
+          <td>{{ reservacion.nombre_lugar_turistico }}</td>
           <td>{{ reservacion.numero_habitacion }}</td>
           <td>{{ reservacion.tipo_habitacion }}</td>
           <td>{{ reservacion.capacidad }} personas</td>
