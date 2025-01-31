@@ -6,7 +6,6 @@ require_once 'jwt_verify.php';
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // **Obtener usuario_id desde el JWT**
     $usuario = verificarToken();
 
     if (!$usuario) {
