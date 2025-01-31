@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
+
 })
 export class reservationComponent implements OnInit {
   lugares: any[] = [];
@@ -24,8 +25,6 @@ export class reservationComponent implements OnInit {
   fechaFin: string = '';
   precioHabitacion: number = 0;
   imagenLugar: string = '';
-
-
 
   constructor(private usuarioService: ReservacionService, private router: Router) { }
 
@@ -96,8 +95,12 @@ export class reservationComponent implements OnInit {
     );
   }
 
+  verificarCamposCompletos() {
+    return this.lugarId && this.hotelId && this.tipoHabitacionId && this.habitacionId && this.fechaInicio && this.fechaFin;
+  }
+
   enviarReserva() {
-    if (!this.lugarId || !this.hotelId || !this.tipoHabitacionId || !this.habitacionId || !this.fechaInicio || !this.fechaFin) {
+    if (!this.verificarCamposCompletos()) {
       console.error("Todos los campos deben ser seleccionados.");
       return;
     }
@@ -123,6 +126,9 @@ export class reservationComponent implements OnInit {
         } else if (data.status === 'success') {
           console.log('Reserva realizada con éxito', data);
           alert('Reserva realizada con éxito');
+
+          // Redirigir a la página principal después de una reserva exitosa
+          this.router.navigate(['/usuario']);
         }
       },
       error => {
