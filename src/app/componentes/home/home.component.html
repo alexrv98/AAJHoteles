@@ -1,27 +1,21 @@
 <main>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar custom-navbar">
     <div
-      class="container-fluid d-flex justify-content-between align-items-center"
+      class="container-fluid d-flex justify-content-between align-items-center py-2"
     >
-      <a routerLink="/">
-        <img class="brand-logo" src="assets/logo.svg" alt="logo" />
-      </a>
-
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Buscar"
-          aria-label="Buscar"
-        />
-        <button class="btn btn-outline-primary me-2" type="submit">
-          Buscar lugar
-        </button>
-      </form>
+      <div class="d-flex align-items-center">
+        <a routerLink="/admin" class="d-flex align-items-center">
+          <img class="brand-logo me-3" src="assets/logoH.png" alt="logo" />
+        </a>
+        <a routerLink="/tipoHabitaciones" class="nav-link custom-link">Habitación</a>
+        <a routerLink="/gestionReservaciones" class="nav-link custom-link ms-3"
+          >Reservaciones</a
+        >
+      </div>
 
       <div>
         <button
-          class="btn btn-outline-danger me-2"
+          class="btn btn-outline-danger"
           routerLinkActive="router-link-active"
           (click)="logout()"
         >

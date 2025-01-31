@@ -8,6 +8,9 @@ import { HotelesComponent } from './componentes/administrador/hoteles/hoteles.co
 import { HabitacionesComponent } from './componentes/administrador/hoteles/habitaciones/habitaciones.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { reservationComponent } from './componentes/usuario/reservation/reservation.component';
+import { TiposHabitacionComponent } from './componentes/administrador/tipos-habitacion/tipos-habitacion.component';
+import { GestionreservacionesService } from './services/gestionreservaciones.service';
+import { GesionReservacionesComponent } from './componentes/administrador/gesion-reservaciones/gesion-reservaciones.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -40,37 +43,21 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'usuario',
   },
+  
   {
-    path: 'reservacion',
-    component: reservationComponent,
-    title: 'Reservación',
+    path: 'tipoHabitaciones',
+    component: TiposHabitacionComponent,
     canActivate: [AuthGuard],
+    title: 'tipoHabitaciones',
   },
-  { path: 'registro', component: RegistroComponent, title: 'registro' },
+
   {
-    path: 'admin',
-    component: AdministradorComponent,
+    path: 'gestionReservaciones',
+    component: GesionReservacionesComponent,
     canActivate: [AuthGuard],
-    title: 'admin',
+    title: 'gestionReservaciones',
   },
-  {
-    path: 'hoteles/:id',
-    component: HotelesComponent,
-    canActivate: [AuthGuard],
-    title: 'hoteles',
-  },
-  {
-    path: 'habitaciones/:id',
-    component: HabitacionesComponent,
-    canActivate: [AuthGuard],
-    title: 'habitaciones',
-  },
-  {
-    path: 'usuario',
-    component: UsuarioComponent,
-    canActivate: [AuthGuard],
-    title: 'usuario',
-  },
+
   { path: 'registro', component: RegistroComponent, title: 'registro' },
   {
     path: 'reservacion',
@@ -79,4 +66,3 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
 ];
-//hola
