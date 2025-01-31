@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lugares',
-  standalone: true, // Si es standalone component
+  standalone: true, 
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './lugares.component.html',
   styleUrls: ['./lugares.component.css'], // styleUrls en plural
