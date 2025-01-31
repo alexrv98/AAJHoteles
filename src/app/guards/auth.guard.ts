@@ -24,7 +24,13 @@ export class AuthGuard implements CanActivate {
     }
 
     // Rutas accesibles para usuario
-    if (userRole === 'usuario' && (route.routeConfig?.path === 'usuario' || route.routeConfig?.path === 'reservacion' || route.routeConfig?.path === 'home')) {
+    if (
+      userRole === 'usuario' &&
+      (route.routeConfig?.path === 'usuario' ||
+        route.routeConfig?.path === 'reservacion' ||
+        route.routeConfig?.path === 'home' ||
+        route.routeConfig?.path?.startsWith('lugar-hoteles'))
+    ) {
       return true; // El usuario puede acceder a home, reservacion y usuario
     }
 

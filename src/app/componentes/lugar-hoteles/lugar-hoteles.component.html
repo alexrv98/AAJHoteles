@@ -1,0 +1,56 @@
+<nav class="navbar navbar-light bg-light">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center"
+  >
+    <a routerLink="/usuario">
+      <img class="brand-logo" src="assets/logoH.png" alt="logo" height="70" />
+    </a>
+    <div>
+      <button
+        class="btn btn-outline-primary me-2"
+        [routerLink]="['/reservacion']"
+        routerLinkActive="router-link-active"
+      >
+        Reservar
+      </button>
+      <button
+        class="btn btn-outline-danger me-2"
+        [routerLink]="['/']"
+        routerLinkActive="router-link-active"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div class="row">
+    <!-- Iteramos sobre hoteles para mostrar los cards horizontalmente -->
+    <div class="col-md-4 mb-3" *ngFor="let hotel of hoteles">
+      <div class="card shadow-sm">
+        <img
+          [src]="hotel.imagen || 'assets/default-hotel.jpg'"
+          alt="Hotel"
+          class="card-img-top"
+          height="200"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ hotel.nombre }}</h5>
+          <p><i class="bi bi-geo-alt"></i> {{ hotel.descripcion }}</p>
+          <p>{{ hotel.direccion }}</p>
+          <p>{{ hotel.telefono }}</p>
+          <p>{{ hotel.estrellas }} ★</p>
+          <a [routerLink]="['/hoteles', hotel.id]" class="btn btn-primary w-100"
+            >Más información</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Si no hay hoteles, mostrar mensaje -->
+  <ng-template #noHoteles>
+    <p class="text-center text-muted">No hay hoteles disponibles.</p>
+  </ng-template>
+</div>
