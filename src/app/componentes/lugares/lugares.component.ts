@@ -9,14 +9,13 @@ import { FormsModule } from '@angular/forms';
   standalone: true, 
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './lugares.component.html',
-  styleUrls: ['./lugares.component.css'], // styleUrls en plural
+  styleUrls: ['./lugares.component.css'],
 })
 export class LugaresComponent implements OnInit {
   lugares: any[] = [];
   lugaresFiltrados: any[] = [];
-  textoBusqueda: string = ''; // Almacena el texto del input
+  textoBusqueda: string = ''; 
 
-  // Usar inyección con `inject()`
   lugaresService: LugaresService = inject(LugaresService);
 
   constructor() {}
@@ -30,7 +29,7 @@ export class LugaresComponent implements OnInit {
       next: (response) => {
         if (response.status === 'success') {
           this.lugares = response.data;
-          this.lugaresFiltrados = response.data; // Aseguramos que los lugares filtrados se llenen
+          this.lugaresFiltrados = response.data; 
         } else {
           console.error('Error al obtener lugares:', response.message);
         }
@@ -42,7 +41,7 @@ export class LugaresComponent implements OnInit {
   }
 
   buscar(event: Event): void {
-    event.preventDefault(); // Evita que el formulario recargue la página
+    event.preventDefault(); 
 
     if (!this.textoBusqueda) {
       this.lugaresFiltrados = this.lugares;

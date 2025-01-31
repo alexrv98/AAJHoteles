@@ -31,10 +31,9 @@ export class AuthGuard implements CanActivate {
         route.routeConfig?.path?.startsWith('lugar-hoteles') ||
         route.routeConfig?.path?.startsWith('habitacionesUsuario')) 
     ) {
-      return true; // El usuario puede acceder a home, reservacion y usuario
+      return true; 
     }
 
-    // Si no coincide ninguna ruta, redirigir al home o login
     this.router.navigate(['/']);
     return false;
   }

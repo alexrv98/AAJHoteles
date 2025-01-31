@@ -16,7 +16,6 @@
 </div>
 <div class="container mt-4">
   <div class="row">
-    <!-- Iteramos sobre hoteles para mostrar los cards horizontalmente -->
     <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesFiltrados">
       <div class="card shadow-sm">
         <img
@@ -43,7 +42,6 @@
 
   .
 
-  <!-- Si no hay hoteles, mostrar mensaje -->
   <ng-template #noHoteles>
     <p class="text-center text-muted">No hay hoteles disponibles.</p>
   </ng-template>

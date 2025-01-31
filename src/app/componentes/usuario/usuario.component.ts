@@ -15,7 +15,7 @@ import { NavusuarioComponent } from '../navusuario/navusuario.component';
 export class UsuarioComponent {
   lugares: any[] = [];
   lugaresFiltrados: any[] = [];
-  textoBusqueda: string = ''; // Almacena el texto del input
+  textoBusqueda: string = ''; 
   lugaresService: LugaresService = inject(LugaresService);
 
   constructor(private authService: AuthService) {

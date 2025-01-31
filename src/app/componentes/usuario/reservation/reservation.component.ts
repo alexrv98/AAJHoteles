@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservacionService } from '../../../services/reservacion.service';
-import { Router, RouterLink } from '@angular/router';  // Importar Router
+import { Router, RouterLink } from '@angular/router';  
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -32,7 +32,6 @@ export class reservationComponent implements OnInit {
   ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      // Si no hay token, redirige al usuario al login
       this.router.navigate(['/login']);
     } else {
       this.cargarLugares();
