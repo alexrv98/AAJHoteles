@@ -18,23 +18,27 @@
   <div class="row">
     <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesFiltrados">
       <div class="card shadow-sm">
-        <img
-          [src]="hotel.imagen || 'assets/default-hotel.jpg'"
-          alt="Hotel"
+        <!-- <img
+          src="{{ hotel.imagen }}"
           class="card-img-top"
-          height="200"
-        />
+          alt="Imagen del hotel"
+        /> -->
         <div class="card-body">
           <h5 class="card-title">{{ hotel.nombre }}</h5>
+          <p class="text-muted">{{ hotel.estrellas }} ★ Estrellas</p>
           <p><i class="bi bi-geo-alt"></i> {{ hotel.descripcion }}</p>
           <p>{{ hotel.direccion }}</p>
-          <p>{{ hotel.telefono }}</p>
-          <p>{{ hotel.estrellas }} ★</p>
+          <p class="d-flex justify-content-start">
+            <i class="bi bi-house-door" title="Playa"></i>
+            <i class="bi bi-swim" title="Alberca"></i>
+            <i class="bi bi-spa" title="Spa"></i>
+          </p>
           <a
             [routerLink]="['/habitacionesUsuario', hotel.id]"
             class="btn btn-primary w-100"
-            >Más información</a
           >
+            Consultar precios
+          </a>
         </div>
       </div>
     </div>
