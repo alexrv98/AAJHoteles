@@ -20,6 +20,8 @@ export class reservationComponent implements OnInit {
   hotelId: number = 0;
   tipoHabitacionId: number = 0;
   habitacionId: number = 0;
+  fechaInicio: string = '';
+  fechaFin: string = '';
 
   constructor(private usuarioService: ReservacionService, private router: Router) { }
 
@@ -83,7 +85,7 @@ export class reservationComponent implements OnInit {
   }
 
   enviarReserva() {
-    if (!this.lugarId || !this.hotelId || !this.tipoHabitacionId || !this.habitacionId) {
+    if (!this.lugarId || !this.hotelId || !this.tipoHabitacionId || !this.habitacionId || !this.fechaInicio || !this.fechaFin) {
       console.error("Todos los campos deben ser seleccionados.");
       return;
     }
@@ -92,7 +94,9 @@ export class reservationComponent implements OnInit {
       lugar_id: this.lugarId,
       hotel_id: this.hotelId,
       tipo_habitacion_id: this.tipoHabitacionId,
-      habitacion_id: this.habitacionId
+      habitacion_id: this.habitacionId,
+      fecha_inicio: this.fechaInicio,
+      fecha_fin: this.fechaFin
     };
 
     this.usuarioService.hacerReservacion(reservacion).subscribe(
@@ -111,7 +115,4 @@ export class reservationComponent implements OnInit {
       }
     );
   }
-
-
-
 }
