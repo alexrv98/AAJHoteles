@@ -1,4 +1,3 @@
-// reservacion.php
 <?php
 require_once 'cors.php';
 require_once 'db.php';
@@ -7,27 +6,53 @@ require_once 'jwt_verify.php';
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (
-        !isset($data->lugar_id) ||
-        !isset($data->hotel_id) ||
-        !isset($data->tipo_habitacion_id) ||
-        !isset($data->habitacion_id)
-    ) {
+    // **Obtener usuario_id desde el JWT**
+    $usuario = verificarToken();
+
+    if (!$usuario) {
+        echo json_encode(["status" => "error", "message" => "No autorizado"]);
+        exit;
+    }
+
+    // Verificar si la respuesta es un array y si tiene el campo 'id'
+    $usuario_id = isset($usuario['id']) ? $usuario['id'] : null; // Cambiar según la estructura real
+
+    if (!$usuario_id) {
+        echo json_encode(["status" => "error", "message" => "ID de usuario no válido"]);
+        exit;
+    }
+
+    // Validar si los datos necesarios están presentes
+    if (empty($data->habitacion_id)) {
         echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
         exit;
     }
 
-    $lugar_id = $data->lugar_id;
-    $hotel_id = $data->hotel_id;
-    $tipo_habitacion_id = $data->tipo_habitacion_id;
-    $habitacion_id = $data->habitacion_id;
+    $habitacion_id = filter_var($data->habitacion_id, FILTER_VALIDATE_INT);
+
+    if (!$habitacion_id) {
+        echo json_encode(["status" => "error", "message" => "Datos inválidos"]);
+        exit;
+    }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO reservaciones (lugar_id, hotel_id, tipo_habitacion_id, habitacion_id) VALUES (:lugar_id, :hotel_id, :tipo_habitacion_id, :habitacion_id)");
-        $stmt->bindParam(':lugar_id', $lugar_id);
-        $stmt->bindParam(':hotel_id', $hotel_id);
-        $stmt->bindParam(':tipo_habitacion_id', $tipo_habitacion_id);
+        // Verificar si la habitación ya está reservada
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM reservaciones WHERE habitacion_id = :habitacion_id AND estado = 'confirmada'");
         $stmt->bindParam(':habitacion_id', $habitacion_id);
+        $stmt->execute();
+        $existe = $stmt->fetchColumn();
+
+        if ($existe > 0) {
+            echo json_encode(["status" => "error", "message" => "La habitación ya está reservada"]);
+            exit;
+        }
+
+        // Insertar la reserva con el usuario_id y el estado predeterminado
+        $estado = 'pendiente';  // Estado por defecto
+        $stmt = $conn->prepare("INSERT INTO reservaciones (usuario_id, habitacion_id, estado) VALUES (:usuario_id, :habitacion_id, :estado)");
+        $stmt->bindParam(':usuario_id', $usuario_id);  // Usar el id del usuario autenticado
+        $stmt->bindParam(':habitacion_id', $habitacion_id);
+        $stmt->bindParam(':estado', $estado);
         $stmt->execute();
 
         echo json_encode(["status" => "success", "message" => "Reserva realizada con éxito"]);
@@ -35,3 +60,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(["status" => "error", "message" => "Error al hacer la reserva: " . $e->getMessage()]);
     }
 }
+?>
