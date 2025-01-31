@@ -7,17 +7,11 @@
         <img class="brand-logo" src="assets/logo.svg" alt="logo" />
       </a>
 
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Buscar"
-          aria-label="Buscar"
-        />
-        <button class="btn btn-outline-primary me-2" type="submit">
-          Buscar lugar
-        </button>
-      </form>
+      <ul>
+        <li *ngFor="let lugar of lugaresFiltrados">
+          {{ lugar.nombre }} - {{ lugar.ubicacion }}
+        </li>
+      </ul>
 
       <div>
         <button

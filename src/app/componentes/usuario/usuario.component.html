@@ -7,37 +7,8 @@
         <img class="brand-logo" src="assets/logo.svg" alt="logo" />
       </a>
 
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Buscar"
-          aria-label="Buscar"
-        />
-        <button class="btn btn-outline-primary me-2" type="submit">
-          Buscar
-        </button>
-      </form>
-
       <div>
-        <!-- <button
-          class="btn btn-outline-primary me-2"
-          [routerLink]="['/reservation']"
-          routerLinkActive="router-link-active"
-        >
-          Reservar
-        </button>
-        class="btn btn-outline-danger me-2"
-        [routerLink]="['/reservacion']"
-        routerLinkActive="router-link-active"
-      >
-        Cerrar sesión
-      </button> -->
-        <button
-          class="btn btn-outline-danger me-2"
-          [routerLink]="['/']"
-          routerLinkActive="router-link-active"
-        >
+        <button class="btn btn-outline-danger me-2" (click)="logout()">
           Cerrar sesión
         </button>
       </div>
