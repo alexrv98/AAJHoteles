@@ -53,15 +53,17 @@
               <input type="text" class="form-control" [value]="'$' + precioHabitacion" readonly>
             </div>
 
+
             <div class="mb-3">
-              <label for="fechaInicio" class="form-label">Fecha de inicio:</label>
-              <input type="date" [(ngModel)]="fechaInicio" name="fechaInicio" id="fechaInicio" class="form-control">
+              <label for="fechaInicio" class="form-label">Fecha y hora de inicio:</label>
+              <input type="datetime-local" [(ngModel)]="fechaInicio" name="fechaInicio" id="fechaInicio" class="form-control">
             </div>
 
             <div class="mb-3">
-              <label for="fechaFin" class="form-label">Fecha de fin:</label>
-              <input type="date" [(ngModel)]="fechaFin" name="fechaFin" id="fechaFin" class="form-control">
+              <label for="fechaFin" class="form-label">Fecha y hora de fin:</label>
+              <input type="datetime-local" [(ngModel)]="fechaFin" name="fechaFin" id="fechaFin" class="form-control">
             </div>
+
 
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Reservar</button>
