@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
+
 export class reservationComponent implements OnInit {
   lugares: any[] = [];
   hoteles: any[] = [];
