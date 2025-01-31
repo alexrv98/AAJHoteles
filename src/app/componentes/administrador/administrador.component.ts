@@ -3,10 +3,11 @@ import { LugaresService } from '../../services/lugares.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-administrador',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, HomeComponent],
   templateUrl: './administrador.component.html',
   styleUrls: ['./administrador.component.css']
 })
@@ -31,20 +32,21 @@ export class AdministradorComponent implements OnInit {
     this.obtenerLugares();
   }
   abrirModalAgregar(): void {
-    this.lugarSeleccionado = {
-      nombre: '',
-      descripcion: '',
-      ubicacion: '',
-      imagen: ''
-    };
-    this.mostrarModal = true; 
-  }
+  this.isEditMode = false; // Asegurar que no esté en modo edición
+  this.nuevoLugar = {
+    nombre: '',
+    descripcion: '',
+    ubicacion: '',
+    imagen: ''
+  };
+  this.mostrarModalAgregar = true; 
+}
   
 
-  cerrarModalAgregar(): void {
-    this.mostrarModalAgregar = false;
-  }
-
+cerrarModalAgregar(): void {
+  this.mostrarModalAgregar = false;
+  this.isEditMode = false; // Resetear modo edición
+}
 
     
 

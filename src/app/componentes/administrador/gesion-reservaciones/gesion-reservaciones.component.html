@@ -1,0 +1,66 @@
+<app-home></app-home>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Mis Reservaciones</h2>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>No</th>
+          <th>Habitación</th>
+          <th>Tipo de Habitación</th>
+          <th>Capacidad</th>
+          <th>Camas</th>
+          <th>Precio</th>
+          <th>Fecha de Inicio</th>
+          <th>Fecha de Fin</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservacion of reservaciones; let i = index">
+          <td>{{ i + 1 }}</td> <!-- Numeración secuencial -->
+          <td>{{ reservacion.numero_habitacion }}</td>
+          <td>{{ reservacion.tipo_habitacion }}</td>
+          <td>{{ reservacion.capacidad }} personas</td>
+          <td>{{ reservacion.camas }} camas</td>
+          <td>${{ reservacion.precio | number:'1.2-2' }}</td>
+          <td>{{ reservacion.fecha_inicio | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ reservacion.fecha_fin | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ reservacion.estado }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="seleccionarReservacion(reservacion)">Editar Estado</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para editar estado -->
+  <div *ngIf="reservacionSeleccionada" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Estado de Reservación</h5>
+          <button type="button" class="btn-close" (click)="reservacionSeleccionada = null"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Estado</label>
+              <select class="form-select" [(ngModel)]="reservacionSeleccionada.estado" name="estado">
+                <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="reservacionSeleccionada = null">Cancelar</button>
+          <button class="btn btn-success" (click)="actualizarEstado()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
