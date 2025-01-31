@@ -1,0 +1,65 @@
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a routerLink="/usuario">
+      <img class="brand-logo" src="assets/logoH.png" alt="logo" height="70" />
+    </a>
+    <div>
+      <button class="btn btn-outline-primary me-2" [routerLink]="['/usuario']" routerLinkActive="router-link-active">
+        Regresar
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h4 class="text-center">Comentarios y Calificaciones</h4>
+
+          <div class="form-group">
+            <label for="lugar">Selecciona un Lugar:</label>
+            <select [(ngModel)]="lugarId" class="form-select" id="lugar" (change)="cargarHoteles()">
+              <option *ngFor="let lugar of lugares" [value]="lugar.id">{{ lugar.nombre }}</option>
+            </select>
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="hotel">Selecciona un Hotel:</label>
+            <select [(ngModel)]="hotelId" class="form-select" id="hotel" (change)="cargarComentarios()">
+              <option *ngFor="let hotel of hoteles" [value]="hotel.id">{{ hotel.nombre }}</option>
+            </select>
+          </div>
+
+          <div *ngFor="let comentario of comentarios" class="mt-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ comentario.usuario }}</h5>
+                <p class="card-text">{{ comentario.comentario }}</p>
+                <p class="card-text"><small class="text-muted">Calificación: {{ comentario.calificacion }} estrellas</small></p>
+                <p class="card-text"><small class="text-muted">Fecha: {{ comentario.fecha | date: 'dd/MM/yyyy' }}</small></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mt-4">
+            <label for="comentario">Agregar un comentario:</label>
+            <textarea [(ngModel)]="comentario" id="comentario" class="form-control" rows="4"></textarea>
+          </div>
+
+          <div class="form-group mt-3">
+            <label for="calificacion">Calificación:</label>
+            <select [(ngModel)]="calificacion" class="form-select" id="calificacion">
+              <option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">{{ star }} estrellas</option>
+            </select>
+          </div>
+
+          <div class="text-center mt-3">
+            <button (click)="agregarComentario()" class="btn btn-primary" [disabled]="!hotelId">Agregar Comentario</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
