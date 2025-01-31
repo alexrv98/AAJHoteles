@@ -44,79 +44,125 @@
       <ng-template #noHoteles>
         <p>No hay hoteles disponibles para este lugar.</p>
       </ng-template>
-      
-  <!-- Modal de agregar -->
-<div *ngIf="mostrarModalAgregar" class="modal" tabindex="-1" style="display: block;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Agregar Hotel</h5>
-          <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
-        </div>
-        <div class="modal-body">
-          <form #formAgregar="ngForm" (ngSubmit)="guardarNuevoHotel(formAgregar)">
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevoHotel.nombre" name="nombre" required>
-            </div>
-            <div class="mb-3">
-              <label for="descripcion" class="form-label">Descripción</label>
-              <input type="text" id="descripcion" class="form-control" [(ngModel)]="nuevoHotel.descripcion" name="descripcion" required>
-            </div>
-            <div class="mb-3">
-              <label for="direccion" class="form-label">Dirección</label>
-              <input type="text" id="direccion" class="form-control" [(ngModel)]="nuevoHotel.direccion" name="direccion" required>
-            </div>
-            <div class="mb-3">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input type="text" id="telefono" class="form-control" [(ngModel)]="nuevoHotel.telefono" name="telefono" required>
-            </div>
-            <div class="mb-3">
-              <label for="estrellas" class="form-label">Max. de personas</label>
-              <input type="number" id="estrellas" class="form-control" [(ngModel)]="nuevoHotel.estrellas" name="estrellas" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
 
-  <!-- Modal de edición -->
-<div *ngIf="mostrarModalEditar" class="modal" tabindex="-1" style="display: block;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Hotel</h5>
-          <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
-        </div>
-        <div class="modal-body">
-          <form #formEditar="ngForm" (ngSubmit)="guardarEdicion()">
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" [(ngModel)]="hotelSeleccionado.nombre" name="nombre" required>
+      <!-- Modal de agregar -->
+<div *ngIf="mostrarModalAgregar" class="modal" tabindex="-1" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Hotel</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+      </div>
+      <div class="modal-body">
+        <form #formAgregar="ngForm" (ngSubmit)="guardarNuevoHotel(formAgregar)">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevoHotel.nombre" name="nombre" required minlength="3" #nombre="ngModel">
+            <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">
+              <small *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</small>
+              <small *ngIf="nombre.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
             </div>
-            <div class="mb-3">
-              <label for="descripcion" class="form-label">Descripción</label>
-              <input type="text" id="descripcion" class="form-control" [(ngModel)]="hotelSeleccionado.descripcion" name="descripcion" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" id="descripcion" class="form-control" [(ngModel)]="nuevoHotel.descripcion" name="descripcion" required #descripcion="ngModel">
+            <div *ngIf="descripcion.invalid && descripcion.touched" class="text-danger">
+              <small>La descripción es obligatoria.</small>
             </div>
-            <div class="mb-3">
-              <label for="direccion" class="form-label">Dirección</label>
-              <input type="text" id="direccion" class="form-control" [(ngModel)]="hotelSeleccionado.direccion" name="direccion" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" id="direccion" class="form-control" [(ngModel)]="nuevoHotel.direccion" name="direccion" required #direccion="ngModel">
+            <div *ngIf="direccion.invalid && direccion.touched" class="text-danger">
+              <small>La dirección es obligatoria.</small>
             </div>
-            <div class="mb-3">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input type="text" id="telefono" class="form-control" [(ngModel)]="hotelSeleccionado.telefono" name="telefono" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" id="telefono" class="form-control" [(ngModel)]="nuevoHotel.telefono" name="telefono" required pattern="^\d{10}$" #telefono="ngModel">
+            <div *ngIf="telefono.invalid && telefono.touched" class="text-danger">
+              <small *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</small>
+              <small *ngIf="telefono.errors?.['pattern']">Debe tener 10 dígitos numéricos.</small>
             </div>
-            <div class="mb-3">
-              <label for="estrellas" class="form-label">Max. de personas</label>
-              <input type="number" id="estrellas" class="form-control" [(ngModel)]="hotelSeleccionado.estrellas" name="estrellas" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="estrellas" class="form-label">Max. de personas</label>
+            <input type="number" id="estrellas" class="form-control" [(ngModel)]="nuevoHotel.estrellas" name="estrellas" required min="1" max="100" #estrellas="ngModel">
+            <div *ngIf="estrellas.invalid && estrellas.touched" class="text-danger">
+              <small *ngIf="estrellas.errors?.['required']">Este campo es obligatorio.</small>
+              <small *ngIf="estrellas.errors?.['min']">Debe ser al menos 1 persona.</small>
+              <small *ngIf="estrellas.errors?.['max']">No puede ser mayor a 100 personas.</small>
             </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
-          </form>
-        </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="formAgregar.invalid">Guardar</button>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>
+
+<!-- Modal de edición -->
+<div *ngIf="mostrarModalEditar" class="modal" tabindex="-1" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Hotel</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
+      </div>
+      <div class="modal-body">
+        <form #formEditar="ngForm" (ngSubmit)="guardarEdicion()">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="hotelSeleccionado.nombre" name="nombre" required minlength="3" #nombreEdit="ngModel">
+            <div *ngIf="nombreEdit.invalid && nombreEdit.touched" class="text-danger">
+              <small *ngIf="nombreEdit.errors?.['required']">El nombre es obligatorio.</small>
+              <small *ngIf="nombreEdit.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" id="descripcion" class="form-control" [(ngModel)]="hotelSeleccionado.descripcion" name="descripcion" required #descripcionEdit="ngModel">
+            <div *ngIf="descripcionEdit.invalid && descripcionEdit.touched" class="text-danger">
+              <small>La descripción es obligatoria.</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" id="direccion" class="form-control" [(ngModel)]="hotelSeleccionado.direccion" name="direccion" required #direccionEdit="ngModel">
+            <div *ngIf="direccionEdit.invalid && direccionEdit.touched" class="text-danger">
+              <small>La dirección es obligatoria.</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" id="telefono" class="form-control" [(ngModel)]="hotelSeleccionado.telefono" name="telefono" required pattern="^\d{10}$" #telefonoEdit="ngModel">
+            <div *ngIf="telefonoEdit.invalid && telefonoEdit.touched" class="text-danger">
+              <small *ngIf="telefonoEdit.errors?.['required']">El teléfono es obligatorio.</small>
+              <small *ngIf="telefonoEdit.errors?.['pattern']">Debe tener 10 dígitos numéricos.</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="estrellas" class="form-label">Max. de personas</label>
+            <input type="number" id="estrellas" class="form-control" [(ngModel)]="hotelSeleccionado.estrellas" name="estrellas" required min="1" max="100" #estrellasEdit="ngModel">
+            <div *ngIf="estrellasEdit.invalid && estrellasEdit.touched" class="text-danger">
+              <small *ngIf="estrellasEdit.errors?.['required']">Este campo es obligatorio.</small>
+              <small *ngIf="estrellasEdit.errors?.['min']">Debe ser al menos 1 persona.</small>
+              <small *ngIf="estrellasEdit.errors?.['max']">No puede ser mayor a 100 personas.</small>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success" [disabled]="formEditar.invalid">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

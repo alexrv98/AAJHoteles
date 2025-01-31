@@ -121,8 +121,8 @@ export class HabitacionesComponent implements OnInit {
   }
 
   cerrarModalEditar(): void {
-    this.habitacionSeleccionada = null;  // Limpiar la habitación seleccionada
-    this.mostrarModalAgregar = false;    // Cerrar el modal
+    this.habitacionSeleccionada = null;  
+    this.mostrarModalAgregar = false;    
   }
 
   editarHabitacion() {
@@ -133,7 +133,7 @@ export class HabitacionesComponent implements OnInit {
         if (response.status === 'success') {
           alert('Habitación actualizada correctamente');
           this.obtenerHabitaciones();
-          this.cerrarModalEditar(); // Cerrar el modal de edición
+          this.cerrarModalEditar(); 
         }
       },
       error: (error) => {
@@ -141,4 +141,33 @@ export class HabitacionesComponent implements OnInit {
       }
     });
   }
+  eliminarHabitacion(idHabitacion: number): void {
+    if (!idHabitacion || isNaN(idHabitacion)) {
+      alert('ID de habitación no válido');
+      return;
+    }
+  
+    const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta habitación? Esta acción no se puede deshacer.');
+  
+    if (!confirmacion) {
+      return;
+    }
+  
+    this.habitacionesService.eliminarHabitacion(idHabitacion).subscribe({
+      next: (response) => {
+        if (response.status === 'success') {
+          alert('Habitación eliminada correctamente');
+          this.obtenerHabitaciones(); // Actualizar la lista
+        } else {
+          alert(response.message || 'No se pudo eliminar la habitación');
+        }
+      },
+      error: (error) => {
+        console.error('Error al eliminar habitación:', error);
+        alert('Ocurrió un error al intentar eliminar la habitación');
+      }
+    });
+  }
+  
+  
 }
