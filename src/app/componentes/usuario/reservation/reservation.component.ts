@@ -23,6 +23,8 @@ export class reservationComponent implements OnInit {
   fechaInicio: string = '';
   fechaFin: string = '';
   precioHabitacion: number = 0;
+  imagenLugar: string = '';
+
 
 
   constructor(private usuarioService: ReservacionService, private router: Router) { }
@@ -51,6 +53,9 @@ export class reservationComponent implements OnInit {
 
   cargarHoteles() {
     if (this.lugarId) {
+      const lugarSeleccionado = this.lugares.find(lugar => lugar.id == this.lugarId);
+      this.imagenLugar = lugarSeleccionado ? lugarSeleccionado.imagen : '';
+
       this.usuarioService.getHoteles(this.lugarId).subscribe(
         (data: any) => {
           this.hoteles = data.data;
@@ -61,6 +66,7 @@ export class reservationComponent implements OnInit {
       );
     }
   }
+
   cargarHabitaciones() {
     if (this.hotelId) {
       this.usuarioService.getHabitaciones(this.hotelId).subscribe(
