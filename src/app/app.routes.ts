@@ -15,6 +15,7 @@ import { LugarHotelesComponent } from './componentes/lugar-hoteles/lugar-hoteles
 import { ComentariosComponent } from './componentes/usuario/comentarios/comentarios.component';
 import { ReservationHabitacionService } from './services/reservation-habitacion.service';
 import { ReservationHabitacionesComponent } from './componentes/usuario/reservation-habitacion/reservation-habitacion.component';
+import { MisReservasComponent } from './componentes/usuario/misreservas/misreservas.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -60,6 +61,12 @@ export const routes: Routes = [
     component: UsuarioComponent,
     canActivate: [AuthGuard],
     title: 'usuario',
+  },
+  {
+    path: 'misreservas',
+    component: MisReservasComponent,
+    canActivate: [AuthGuard],
+    title: 'misreservas',
   },
 
   {
