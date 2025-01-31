@@ -1,86 +1,83 @@
-<nav class="navbar navbar-light bg-light">
-  <div
-    class="container-fluid d-flex justify-content-between align-items-center"
-  >
-    <a routerLink="/usuario">
-      <img class="brand-logo" src="assets/logoH.png" alt="logo" height="70" />
-    </a>
-    <div>
-      <button
-        class="btn btn-outline-primary me-2"
-        [routerLink]="['/reservacion']"
-        routerLinkActive="router-link-active"
-      >
-        Reservar
-      </button>
-      <button
-        class="btn btn-outline-danger me-2"
-        [routerLink]="['/']"
-        routerLinkActive="router-link-active"
-      >
-        Cerrar sesión
-      </button>
-    </div>
-  </div>
-</nav>
+<app-navusuario></app-navusuario>
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/searchpanes/2.1.1/css/searchPanes.dataTables.min.css"
+/>
+
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Habitaciones Disponibles</h2>
-    </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Habitaciones Disponibles</h2>
+  </div>
 
-    <div *ngIf="habitaciones.length > 0; else noHabitaciones">
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Número.</th>
-            <th>Tipo</th>
-            <th>Personas</th>
-            <th>Camas</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let habitacion of habitaciones">
-            <td>{{ habitacion.numero_habitacion }}</td>
-            <td>{{ habitacion.tipo }}</td>
-            <td>{{ habitacion.capacidad }}</td>
-            <td>{{ habitacion.camas }}</td>
-            <td>{{ habitacion.precio | currency }}</td>
-           
-            <td>
-              <button 
-                *ngIf="habitacion.disponibilidad === 1"
-                class="btn btn-success btn-sm"
-                (click)="abrirModalReserva(habitacion)">
-                Reservar.
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div *ngIf="habitaciones.length > 0; else noHabitaciones">
+    <table
+      class="table table-bordered row-border hover center"
+      datatable
+      [dtOptions]="dtOptions"
+    >
+      <thead class="table-light">
+        <tr>
+          <th>Número.</th>
+          <th>Tipo</th>
+          <th>Personas</th>
+          <th>Camas</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let habitacion of habitaciones">
+          <td>{{ habitacion.numero_habitacion }}</td>
+          <td>{{ habitacion.tipo }}</td>
+          <td>{{ habitacion.capacidad }}</td>
+          <td>{{ habitacion.camas }}</td>
+          <td>{{ habitacion.precio | currency }}</td>
 
-    <ng-template #noHabitaciones>
-      <p>No hay habitaciones disponibles para este hotel.</p>
-    </ng-template>
+          <td>
+            <button
+              *ngIf="habitacion.disponibilidad === 1"
+              class="btn btn-success btn-sm"
+              (click)="abrirModalReserva(habitacion)"
+            >
+              Reservar
+            </button>
+            <button
+              *ngIf="habitacion.disponibilidad !== 1"
+              class="btn btn-danger btn-sm"
+            >
+              Reservada
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noHabitaciones>
+    <p>No hay habitaciones disponibles para este hotel.</p>
+  </ng-template>
 </div>
 
-
 <!-- Modal de Reserva -->
-<div *ngIf="mostrarModal" class="modal" tabindex="-1" style="display: block;">
+<div *ngIf="mostrarModal" class="modal" tabindex="-1" style="display: block">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
           Reservar Habitación {{ habitacionSeleccionada?.numero_habitacion }}
         </h5>
-        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="cerrarModal()"
+        ></button>
       </div>
       <div class="modal-body">
         <form #formReserva="ngForm" (ngSubmit)="reservar()">
           <div class="mb-3">
-            <label for="fechaInicio" class="form-label">Fecha y hora de inicio:</label>
+            <label for="fechaInicio" class="form-label"
+              >Fecha y hora de inicio:</label
+            >
             <input
               type="datetime-local"
               id="fechaInicio"
@@ -92,7 +89,9 @@
           </div>
 
           <div class="mb-3">
-            <label for="fechaFin" class="form-label">Fecha y hora de fin:</label>
+            <label for="fechaFin" class="form-label"
+              >Fecha y hora de fin:</label
+            >
             <input
               type="datetime-local"
               id="fechaFin"
@@ -105,11 +104,16 @@
 
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Confirmar</button>
-            <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="cerrarModal()"
+            >
+              Cancelar
+            </button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-

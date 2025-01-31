@@ -126,7 +126,6 @@ export class reservationComponent implements OnInit {
           console.log('Reserva realizada con éxito', data);
           alert('Reserva realizada con éxito');
 
-          // Redirigir a la página principal después de una reserva exitosa
           this.router.navigate(['/usuario']);
         }
       },
