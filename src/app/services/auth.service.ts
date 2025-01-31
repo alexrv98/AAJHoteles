@@ -6,8 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost/sistemaExam/api';
-
+  private apiUrl = 'http://192.168.1.102/sistemaExam/api';
   constructor(private http: HttpClient) {}
 
   login(correo: string, password: string): Observable<any> {
