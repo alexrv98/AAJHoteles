@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { DataTablesModule } from 'angular-datatables';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterModule],
+  imports: [RouterOutlet, RouterModule, DataTablesModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
