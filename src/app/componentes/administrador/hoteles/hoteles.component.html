@@ -15,7 +15,7 @@
               <th>Descripción</th>
               <th>Dirección</th>
               <th>Teléfono</th>
-              <th>Max de personas</th>
+              <th>Estrellas</th>
               <th>Habitaciones</th> 
               <th>Acciones</th>
             </tr>
@@ -90,7 +90,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="estrellas" class="form-label">Max. de personas</label>
+            <label for="estrellas" class="form-label">Estrellas</label>
             <input type="number" id="estrellas" class="form-control" [(ngModel)]="nuevoHotel.estrellas" name="estrellas" required min="1" max="100" #estrellas="ngModel">
             <div *ngIf="estrellas.invalid && estrellas.touched" class="text-danger">
               <small *ngIf="estrellas.errors?.['required']">Este campo es obligatorio.</small>
@@ -151,7 +151,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="estrellas" class="form-label">Max. de personas</label>
+            <label for="estrellas" class="form-label">Estrellas</label>
             <input type="number" id="estrellas" class="form-control" [(ngModel)]="hotelSeleccionado.estrellas" name="estrellas" required min="1" max="100" #estrellasEdit="ngModel">
             <div *ngIf="estrellasEdit.invalid && estrellasEdit.touched" class="text-danger">
               <small *ngIf="estrellasEdit.errors?.['required']">Este campo es obligatorio.</small>
