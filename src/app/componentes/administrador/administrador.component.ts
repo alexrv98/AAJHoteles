@@ -32,7 +32,7 @@ export class AdministradorComponent implements OnInit {
     this.obtenerLugares();
   }
   abrirModalAgregar(): void {
-  this.isEditMode = false; // Asegurar que no esté en modo edición
+  this.isEditMode = false; 
   this.nuevoLugar = {
     nombre: '',
     descripcion: '',
@@ -45,7 +45,7 @@ export class AdministradorComponent implements OnInit {
 
 cerrarModalAgregar(): void {
   this.mostrarModalAgregar = false;
-  this.isEditMode = false; // Resetear modo edición
+  this.isEditMode = false; 
 }
 
     
@@ -68,21 +68,9 @@ cerrarModalAgregar(): void {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-  // Abre el modal para editar un lugar
   abrirModalEditar(lugar: any): void {
-    this.isEditMode = true;  // Establece que estamos en modo editar
-    this.lugarSeleccionado = { ...lugar };  // Crea una copia del lugar seleccionado
+    this.isEditMode = true; 
+    this.lugarSeleccionado = { ...lugar };  
     this.mostrarModal = true;
   }
 

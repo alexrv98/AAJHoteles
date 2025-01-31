@@ -15,7 +15,7 @@ export class LugarHotelesComponent implements OnInit {
   hoteles: any[] = [];
   lugarId!: number;
   hotelesFiltrados: any[] = [];
-  textoBusqueda: string = ''; // Almacena el texto del input
+  textoBusqueda: string = ''; 
   mostrarModalAgregar: boolean = false;
   nuevoHotel: any = {
     nombre: '',
@@ -58,7 +58,7 @@ export class LugarHotelesComponent implements OnInit {
   }
 
   buscar(event: Event): void {
-    event.preventDefault(); // Evita que el formulario recargue la página
+    event.preventDefault(); 
 
     if (!this.textoBusqueda) {
       this.hotelesFiltrados = this.hoteles;

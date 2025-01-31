@@ -95,6 +95,7 @@ export class ReservationHabitacionesComponent implements OnInit {
     this.mostrarModal = false;
     this.habitacionSeleccionada = null;
   }
+  
   reservar(): void {
     if (!this.fechaInicio || !this.fechaFin) {
       alert('Selecciona una fecha de inicio y fin');

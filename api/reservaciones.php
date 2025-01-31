@@ -6,7 +6,6 @@ require_once 'jwt_verify.php';
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // **Obtener usuario_id desde el JWT**
     $usuario = verificarToken();
 
     if (!$usuario) {
@@ -28,8 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $habitacion_id = filter_var($data->habitacion_id, FILTER_VALIDATE_INT);
-    $fecha_inicio = date('Y-m-d H:i:s', strtotime($data->fecha_inicio . ' 00:00:00')); // Convertir a DATETIME
-    $fecha_fin = date('Y-m-d H:i:s', strtotime($data->fecha_fin . ' 23:59:59')); // Convertir a DATETIME
+    // Aquí no modificamos las fechas, se usa tal cual las recibimos
+    $fecha_inicio = $data->fecha_inicio; // Usar la fecha con la hora tal como viene
+    $fecha_fin = $data->fecha_fin; // Usar la fecha con la hora tal como viene
 
     if (!$habitacion_id) {
         echo json_encode(["status" => "error", "message" => "Datos inválidos"]);

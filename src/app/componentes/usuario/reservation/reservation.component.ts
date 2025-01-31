@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservacionService } from '../../../services/reservacion.service';
-import { Router, RouterLink } from '@angular/router';  // Importar Router
+import { Router, RouterLink } from '@angular/router';  
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
+
 })
 export class reservationComponent implements OnInit {
   lugares: any[] = [];
@@ -25,14 +26,11 @@ export class reservationComponent implements OnInit {
   precioHabitacion: number = 0;
   imagenLugar: string = '';
 
-
-
   constructor(private usuarioService: ReservacionService, private router: Router) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      // Si no hay token, redirige al usuario al login
       this.router.navigate(['/login']);
     } else {
       this.cargarLugares();
@@ -96,20 +94,27 @@ export class reservationComponent implements OnInit {
     );
   }
 
+  verificarCamposCompletos() {
+    return this.lugarId && this.hotelId && this.tipoHabitacionId && this.habitacionId && this.fechaInicio && this.fechaFin;
+  }
+
   enviarReserva() {
-    if (!this.lugarId || !this.hotelId || !this.tipoHabitacionId || !this.habitacionId || !this.fechaInicio || !this.fechaFin) {
+    if (!this.verificarCamposCompletos()) {
       console.error("Todos los campos deben ser seleccionados.");
       return;
     }
+
+    // Convertir las fechas a formato ISO 8601
+    const fechaInicioISO = new Date(this.fechaInicio).toISOString();
+    const fechaFinISO = new Date(this.fechaFin).toISOString();
 
     const reservacion = {
       lugar_id: this.lugarId,
       hotel_id: this.hotelId,
       tipo_habitacion_id: this.tipoHabitacionId,
       habitacion_id: this.habitacionId,
-      fecha_inicio: this.fechaInicio,
-      fecha_fin: this.fechaFin
-
+      fecha_inicio: fechaInicioISO,
+      fecha_fin: fechaFinISO
     };
 
     this.usuarioService.hacerReservacion(reservacion).subscribe(
@@ -120,6 +125,9 @@ export class reservationComponent implements OnInit {
         } else if (data.status === 'success') {
           console.log('Reserva realizada con éxito', data);
           alert('Reserva realizada con éxito');
+
+          // Redirigir a la página principal después de una reserva exitosa
+          this.router.navigate(['/usuario']);
         }
       },
       error => {

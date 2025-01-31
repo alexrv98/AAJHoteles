@@ -40,7 +40,6 @@ export class HotelesService {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    // La URL debería incluir el ID del hotel en la query
     return this.http.delete<any>(`${this.apiUrl}/eliminarHotel.php?id=${id}`, {
       headers,
     });

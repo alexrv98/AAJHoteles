@@ -29,4 +29,11 @@ export class GestionreservacionesService {
       headers,
     });
   }
+
+  obtenerReservacionesUsuario(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.get(`${this.apiUrl}/listreservacionesusuario.php`, { headers });
+  }
 }

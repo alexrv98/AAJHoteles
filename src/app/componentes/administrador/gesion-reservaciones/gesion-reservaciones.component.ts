@@ -38,7 +38,7 @@ export class GesionReservacionesComponent implements OnInit {
   }
 
   seleccionarReservacion(reservacion: any): void {
-    this.reservacionSeleccionada = { ...reservacion }; // Clonar para edición
+    this.reservacionSeleccionada = { ...reservacion };
   }
 
   actualizarEstado(): void {
@@ -50,9 +50,9 @@ export class GesionReservacionesComponent implements OnInit {
         .subscribe(
           (response) => {
             if (response.status === 'success') {
-              this.obtenerReservaciones(); // Refrescar la lista
+              this.obtenerReservaciones(); 
               alert('Estado actualizado exitosamente');
-              this.reservacionSeleccionada = null; // Cerrar el modal
+              this.reservacionSeleccionada = null; 
             } else {
               alert('Error al actualizar el estado');
             }
