@@ -5,6 +5,7 @@ import { HabitacionesService } from './habitaciones.service';
 describe('HabitacionesService', () => {
   let service: HabitacionesService;
 
+  
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HabitacionesService);
@@ -13,5 +14,5 @@ describe('HabitacionesService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-  
+
 });
