@@ -44,8 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar el token del usuario
     $usuario = verificarToken();
 
-    // Verificar si los parámetros necesarios están presentes
-    if (!isset($_POST['hotel_id']) || !isset($_POST['calificacion']) || !isset($_POST['comentario'])) {
+    // Obtener los datos JSON enviados en la solicitud
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    // Verificar si los parámetros necesarios están presentes en los datos JSON
+    if (!isset($data['hotel_id']) || !isset($data['calificacion']) || !isset($data['comentario'])) {
         echo json_encode([
             "status" => "error",
             "message" => "Se requieren los parámetros hotel_id, calificacion y comentario"
@@ -53,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $hotel_id = intval($_POST['hotel_id']);
-    $calificacion = intval($_POST['calificacion']);
-    $comentario = $_POST['comentario'];
+    $hotel_id = intval($data['hotel_id']);
+    $calificacion = intval($data['calificacion']);
+    $comentario = $data['comentario'];
 
     // Validar la calificación
     if ($calificacion < 1 || $calificacion > 5) {
