@@ -4,10 +4,11 @@ import { LugaresComponent } from '../lugares/lugares.component';
 import { AuthService } from '../../services/auth.service';
 import { LugaresService } from '../../services/lugares.service';
 import { FormsModule } from '@angular/forms';
+import { NavusuarioComponent } from '../navusuario/navusuario.component';
 
 @Component({
   selector: 'app-usuario',
-  imports: [RouterModule, LugaresComponent, FormsModule],
+  imports: [RouterModule, LugaresComponent, FormsModule, NavusuarioComponent],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css',
 })

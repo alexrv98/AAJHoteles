@@ -24,11 +24,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-  path: 'comentario',
-  component: ComentariosComponent,
-  title: 'comentario',
-  canActivate: [AuthGuard],
-},
+    path: 'comentario',
+    component: ComentariosComponent,
+    title: 'comentario',
+    canActivate: [AuthGuard],
+  },
   {
     path: 'admin',
     component: AdministradorComponent,
@@ -48,6 +48,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'hoteles',
   },
+
   {
     path: 'habitaciones/:id',
     component: HabitacionesComponent,

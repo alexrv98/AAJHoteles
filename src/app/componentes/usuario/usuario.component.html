@@ -1,39 +1,5 @@
 <main>
-  <nav class="navbar navbar-light bg-light">
-    <div
-      class="container-fluid d-flex justify-content-between align-items-center"
-    >
-      <a routerLink="/usuario">
-        <img class="brand-logo" src="assets/logoH.png" alt="logo" height="70" />
-      </a>
-
-      <div>
-        <button
-          class="btn btn-outline-primary me-2"
-          [routerLink]="['/reservacion']"
-          routerLinkActive="router-link-active"
-        >
-          Reservar
-        </button>
-        <button
-          class="btn btn-outline-danger me-2"
-          [routerLink]="['/']"
-          routerLinkActive="router-link-active"
-          (click)="logout()"
-        >
-          Cerrar sesión
-        </button>
-        <button
-        class="btn btn-outline-primary me-2"
-        [routerLink]="['/comentario']"
-        routerLinkActive="router-link-active"
-      >
-        Reservar
-      </button>
-
-      </div>
-    </div>
-  </nav>
+  <app-navusuario></app-navusuario>
   <div class="containes">
     <div>
       <app-lugares></app-lugares>
