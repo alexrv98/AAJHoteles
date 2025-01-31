@@ -24,7 +24,7 @@ export class HabitacionesService {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    console.log('📤 Enviando datos a la API:', habitacion);
+    console.log('Enviando datos a la API:', habitacion);
 
     return this.http.post<any>(
       `${this.apiUrl}/agregarHabitacion.php`,
@@ -52,4 +52,16 @@ export class HabitacionesService {
       { headers }
     );
   }
+
+  eliminarHabitacion(idHabitacion: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.delete<any>(
+      `${this.apiUrl}/eliminarHabitacion.php?id=${idHabitacion}`,
+      { headers }
+    );
+  }
+  
+  
 }
