@@ -24,7 +24,13 @@
           <h5 class="card-title">{{ lugar.nombre }}</h5>
           <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
           <p>{{ lugar.ubicacion }}</p>
-          <a href="#" class="btn btn-primary w-100">Más información</a>
+
+          <a
+            [routerLink]="['/details', lugar.id]"
+            routerLinkActive="router-link-active"
+            class="btn btn-primary w-100"
+            >Más información</a
+          >
         </div>
       </div>
     </div>

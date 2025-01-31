@@ -19,6 +19,15 @@ export class LugaresService {
     });
   }
 
+  obtenerLugaById(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php?id=${id}`, {
+      headers: headers,
+    });
+  }
+
   addLugar(lugar: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
