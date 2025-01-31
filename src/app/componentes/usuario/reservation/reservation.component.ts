@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservacionService } from '../../../services/reservacion.service';
-import { Router } from '@angular/router';  // Importar Router
+import { Router, RouterLink } from '@angular/router';  // Importar Router
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-usuario',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
 })
@@ -22,6 +22,8 @@ export class reservationComponent implements OnInit {
   habitacionId: number = 0;
   fechaInicio: string = '';
   fechaFin: string = '';
+  precioHabitacion: number = 0;
+
 
   constructor(private usuarioService: ReservacionService, private router: Router) { }
 
@@ -59,7 +61,6 @@ export class reservationComponent implements OnInit {
       );
     }
   }
-
   cargarHabitaciones() {
     if (this.hotelId) {
       this.usuarioService.getHabitaciones(this.hotelId).subscribe(
@@ -71,6 +72,11 @@ export class reservationComponent implements OnInit {
         }
       );
     }
+  }
+
+  actualizarPrecio() {
+    const habitacionSeleccionada = this.habitaciones.find(h => h.id == this.habitacionId);
+    this.precioHabitacion = habitacionSeleccionada ? habitacionSeleccionada.precio : 0;
   }
 
   cargarTiposHabitacion() {
@@ -97,6 +103,7 @@ export class reservationComponent implements OnInit {
       habitacion_id: this.habitacionId,
       fecha_inicio: this.fechaInicio,
       fecha_fin: this.fechaFin
+
     };
 
     this.usuarioService.hacerReservacion(reservacion).subscribe(

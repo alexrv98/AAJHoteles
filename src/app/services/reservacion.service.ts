@@ -37,11 +37,11 @@ export class ReservacionService {
 
   // Obtener habitaciones por hotel_id
   getHabitaciones(hotel_id: number): Observable<any> {
-    return this.http.get(
-      `${this.apiUrl}/listHabitaciones.php?hotel_id=${hotel_id}`,
-      { headers: this.crearHeaders() }
-    );
+    return this.http.get(`${this.apiUrl}/listHabitaciones.php?hotel_id=${hotel_id}`, {
+      headers: this.crearHeaders(),
+    });
   }
+
 
   // Obtener tipos de habitaciones
   getTiposHabitacion(): Observable<any> {

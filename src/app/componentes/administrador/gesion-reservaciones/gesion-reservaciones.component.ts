@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { GestionreservacionesService } from '../../../services/gestionreservaciones.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { HomeComponent } from '../../home/home.component';
 import { FormsModule } from '@angular/forms';
+import { Routes } from '@angular/router';
 
 @Component({
   selector: 'app-gesion-reservaciones',
   templateUrl: './gesion-reservaciones.component.html',
-  imports: [CommonModule, RouterLink, HomeComponent, FormsModule],
+  imports: [CommonModule,HomeComponent, FormsModule,],
   styleUrls: ['./gesion-reservaciones.component.css']
 })
 export class GesionReservacionesComponent implements OnInit {
   reservaciones: any[] = [];
   reservacionSeleccionada: any;
-  estados = ['pendiente', 'confirmada', 'cancelada']; 
+  estados = ['pendiente', 'confirmada', 'cancelada'];
 
   constructor(private GestionreservacionesService: GestionreservacionesService) {}
 
