@@ -55,7 +55,6 @@ export class LugaresService {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    // Enviar los datos del nuevo lugar a la API mediante POST
     return this.http.post<any>(
       `${this.apiUrl}/agregarLugaresTuristicos.php`,
       lugar,

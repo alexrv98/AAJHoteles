@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HabitacionesService } from '../../../../services/habitaciones.service';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from '../../../home/home.component';
 
 @Component({
   selector: 'app-habitaciones',
   templateUrl: './habitaciones.component.html',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HomeComponent],
   styleUrls: ['./habitaciones.component.css']
 })
 export class HabitacionesComponent implements OnInit {

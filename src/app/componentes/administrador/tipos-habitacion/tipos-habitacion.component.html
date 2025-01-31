@@ -1,0 +1,93 @@
+<app-home></app-home>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Tipos de Habitación</h2>
+    <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Tipo de Habitación</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>No</th>
+          <th>Nombre</th>
+          <th>Capacidad</th>
+          <th>Camas</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tipo of tiposHabitacion; let i = index">
+          <td>{{ i + 1 }}</td> <!-- Numeración secuencial -->
+          <td>{{ tipo.nombre }}</td>
+          <td>{{ tipo.capacidad }}</td>
+          <td>{{ tipo.camas }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(tipo)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarTipoHabitacion(tipo.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Agregar Tipo -->
+  <div *ngIf="mostrarModalAgregar" class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Tipo de Habitación</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+        </div>
+        <div class="modal-body">
+          <form #formAgregar="ngForm" (ngSubmit)="guardarNuevoTipo(formAgregar)">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevoTipo.nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="capacidad" class="form-label">Capacidad</label>
+              <input type="number" id="capacidad" class="form-control" [(ngModel)]="nuevoTipo.capacidad" name="capacidad" required>
+            </div>
+            <div class="mb-3">
+              <label for="camas" class="form-label">Camas</label>
+              <input type="number" id="camas" class="form-control" [(ngModel)]="nuevoTipo.camas" name="camas" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de Edición -->
+<div class="modal fade show" tabindex="-1" [ngClass]="{'d-block': mostrarModalEditar}" *ngIf="mostrarModalEditar">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Tipo de Habitación</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="tipoSeleccionado.nombre" name="nombre">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Capacidad</label>
+            <input type="number" class="form-control" [(ngModel)]="tipoSeleccionado.capacidad" name="capacidad">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Camas</label>
+            <input type="number" class="form-control" [(ngModel)]="tipoSeleccionado.camas" name="camas">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="cerrarModalEditar()">Cancelar</button>
+        <button class="btn btn-success" (click)="guardarEdicion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
