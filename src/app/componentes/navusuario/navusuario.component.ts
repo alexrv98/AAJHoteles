@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-navusuario',
-  imports: [RouterLink, RouterModule],
+  imports: [RouterLink, RouterModule, NavusuarioComponent],
   templateUrl: './navusuario.component.html',
   styleUrl: './navusuario.component.css',
 })

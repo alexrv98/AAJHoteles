@@ -12,31 +12,28 @@ export class AuthGuard implements CanActivate {
     const token = this.authService.getToken();
     const userRole = this.authService.getUserRole();
 
-    // Si no hay token, redirigir al login
     if (!token) {
       this.router.navigate(['/']);
       return false;
     }
 
-    // Rutas accesibles para admin
     if (userRole === 'admin') {
-      return true; // El admin tiene acceso completo
+      return true; 
     }
 
-    // Rutas accesibles para usuario
     if (
       userRole === 'usuario' &&
       (route.routeConfig?.path === 'usuario' ||
         route.routeConfig?.path === 'reservacion' ||
         route.routeConfig?.path === 'comentario' ||
         route.routeConfig?.path === 'home' ||
+        route.routeConfig?.path === 'misreservas' ||
         route.routeConfig?.path?.startsWith('lugar-hoteles') ||
         route.routeConfig?.path?.startsWith('habitacionesUsuario')) 
     ) {
-      return true; // El usuario puede acceder a home, reservacion y usuario
+      return true; 
     }
 
-    // Si no coincide ninguna ruta, redirigir al home o login
     this.router.navigate(['/']);
     return false;
   }
