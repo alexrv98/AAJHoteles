@@ -37,22 +37,37 @@
               <div class="card-body">
                 <h5 class="card-title">{{ comentario.usuario }}</h5>
                 <p class="card-text">{{ comentario.comentario }}</p>
-                <p class="card-text"><small class="text-muted">Calificación: {{ comentario.calificacion }} estrellas</small></p>
+                <p class="card-text">
+                  <small class="text-muted">Calificación:
+                    <span class="star-rating">
+                      <i *ngFor="let star of [1, 2, 3, 4, 5]"
+                         class="fa fa-star"
+                         [class.filled]="star <= comentario.calificacion"></i>
+                    </span>
+                  </small>
+                </p>
                 <p class="card-text"><small class="text-muted">Fecha: {{ comentario.fecha | date: 'dd/MM/yyyy' }}</small></p>
               </div>
             </div>
           </div>
-          <div class="form-group mt-4">
-            <label for="comentario">Agregar un comentario :</label>
-            <textarea [(ngModel)]="comentario" id="comentario" class="form-control" rows="4"></textarea>
-          </div>
+
+
 
           <div class="form-group mt-3">
             <label for="calificacion">Calificación:</label>
-            <select [(ngModel)]="calificacion" class="form-select" id="calificacion">
-              <option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">{{ star }} estrellas</option>
-            </select>
+            <div class="star-rating">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                    [class.filled]="star <= calificacion"
+                    (click)="calificacion = star"
+                    class="fa fa-star"></span>
+            </div>
           </div>
+
+          <div class="form-group mt-4">
+            <label for="comentario">Agregar un comentario:</label>
+            <textarea [(ngModel)]="comentario" id="comentario" class="form-control" rows="4"></textarea>
+          </div>
+
 
           <div class="text-center mt-3">
             <button (click)="agregarComentario()" class="btn btn-primary" [disabled]="!hotelId">Agregar Comentario</button>

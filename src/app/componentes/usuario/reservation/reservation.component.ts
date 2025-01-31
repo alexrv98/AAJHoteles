@@ -102,14 +102,17 @@ export class reservationComponent implements OnInit {
       return;
     }
 
+    // Convertir las fechas a formato ISO 8601
+    const fechaInicioISO = new Date(this.fechaInicio).toISOString();
+    const fechaFinISO = new Date(this.fechaFin).toISOString();
+
     const reservacion = {
       lugar_id: this.lugarId,
       hotel_id: this.hotelId,
       tipo_habitacion_id: this.tipoHabitacionId,
       habitacion_id: this.habitacionId,
-      fecha_inicio: this.fechaInicio,
-      fecha_fin: this.fechaFin
-
+      fecha_inicio: fechaInicioISO,
+      fecha_fin: fechaFinISO
     };
 
     this.usuarioService.hacerReservacion(reservacion).subscribe(
