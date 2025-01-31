@@ -24,6 +24,8 @@ CREATE TABLE lugares_turisticos (
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     ubicacion VARCHAR(255)
+    Imagen VARCHAR(100) NOT NULL,
+
 );
 
 -- Tabla de hoteles

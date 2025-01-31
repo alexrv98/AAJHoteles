@@ -14,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Verificar si la respuesta es un array y si tiene el campo 'id'
-    $usuario_id = isset($usuario['id']) ? $usuario['id'] : null; // Cambiar según la estructura real
+    $usuario_id = isset($usuario['id']) ? $usuario['id'] : null;
 
     if (!$usuario_id) {
         echo json_encode(["status" => "error", "message" => "ID de usuario no válido"]);
@@ -23,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validar si los datos necesarios están presentes
-    if (empty($data->habitacion_id)) {
+    if (empty($data->habitacion_id) || empty($data->fecha_inicio) || empty($data->fecha_fin)) {
         echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
         exit;
     }
 
     $habitacion_id = filter_var($data->habitacion_id, FILTER_VALIDATE_INT);
+    $fecha_inicio = date('Y-m-d H:i:s', strtotime($data->fecha_inicio . ' 00:00:00')); // Convertir a DATETIME
+    $fecha_fin = date('Y-m-d H:i:s', strtotime($data->fecha_fin . ' 23:59:59')); // Convertir a DATETIME
 
     if (!$habitacion_id) {
         echo json_encode(["status" => "error", "message" => "Datos inválidos"]);
@@ -36,22 +37,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // Verificar si la habitación ya está reservada
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM reservaciones WHERE habitacion_id = :habitacion_id AND estado = 'confirmada'");
+        // Verificar si la habitación ya está reservada en el rango de fechas
+        $stmt = $conn->prepare("
+            SELECT COUNT(*) FROM reservaciones
+            WHERE habitacion_id = :habitacion_id
+            AND estado = 'confirmada'
+            AND (
+                (fecha_inicio BETWEEN :fecha_inicio AND :fecha_fin) OR
+                (fecha_fin BETWEEN :fecha_inicio AND :fecha_fin) OR
+                (:fecha_inicio BETWEEN fecha_inicio AND fecha_fin)
+            )
+        ");
         $stmt->bindParam(':habitacion_id', $habitacion_id);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->execute();
         $existe = $stmt->fetchColumn();
 
         if ($existe > 0) {
-            echo json_encode(["status" => "error", "message" => "La habitación ya está reservada"]);
+            echo json_encode(["status" => "error", "message" => "La habitación ya está reservada en esas fechas"]);
             exit;
         }
 
-        // Insertar la reserva con el usuario_id y el estado predeterminado
-        $estado = 'pendiente';  // Estado por defecto
-        $stmt = $conn->prepare("INSERT INTO reservaciones (usuario_id, habitacion_id, estado) VALUES (:usuario_id, :habitacion_id, :estado)");
-        $stmt->bindParam(':usuario_id', $usuario_id);  // Usar el id del usuario autenticado
+        // Insertar la reserva con fecha_inicio y fecha_fin
+        $estado = 'pendiente';
+        $stmt = $conn->prepare("
+            INSERT INTO reservaciones (usuario_id, habitacion_id, fecha_inicio, fecha_fin, estado)
+            VALUES (:usuario_id, :habitacion_id, :fecha_inicio, :fecha_fin, :estado)
+        ");
+        $stmt->bindParam(':usuario_id', $usuario_id);
         $stmt->bindParam(':habitacion_id', $habitacion_id);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
         $stmt->bindParam(':estado', $estado);
         $stmt->execute();
 
