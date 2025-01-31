@@ -11,6 +11,7 @@ import { reservationComponent } from './componentes/usuario/reservation/reservat
 import { TiposHabitacionComponent } from './componentes/administrador/tipos-habitacion/tipos-habitacion.component';
 import { GestionreservacionesService } from './services/gestionreservaciones.service';
 import { GesionReservacionesComponent } from './componentes/administrador/gesion-reservaciones/gesion-reservaciones.component';
+import { LugarHotelesComponent } from './componentes/lugar-hoteles/lugar-hoteles.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -31,6 +32,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'hoteles',
   },
+
+  {
+    path: 'lugar-hoteles/:id',
+    component: LugarHotelesComponent,
+    canActivate: [AuthGuard],
+    title: 'hoteles',
+  },
   {
     path: 'habitaciones/:id',
     component: HabitacionesComponent,
@@ -43,7 +51,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'usuario',
   },
-  
+
   {
     path: 'tipoHabitaciones',
     component: TiposHabitacionComponent,
