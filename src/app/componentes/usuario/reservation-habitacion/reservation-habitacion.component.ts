@@ -3,17 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ReservationHabitacionService } from '../../../services/reservation-habitacion.service';
-import { HomeComponent } from '../../home/home.component';
 import { NavusuarioComponent } from '../../navusuario/navusuario.component';
 import { DataTablesModule } from 'angular-datatables';
-import { Config } from 'datatables.net';
+import 'datatables.net-searchpanes';
+import 'datatables.net-select';
+import 'datatables.net-searchpanes-bs5'; // Si usas Bootstrap 5
+import 'datatables.net-select-bs5'; // Si usas Bootstrap 5
+
 @Component({
   selector: 'app-reservation-habitacion',
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    HomeComponent,
     NavusuarioComponent,
     DataTablesModule,
   ],
@@ -35,7 +37,7 @@ export class ReservationHabitacionesComponent implements OnInit {
     private ReservationService: ReservationHabitacionService
   ) {}
 
-  dtOptions: Config = {};
+  dtOptions: any = {};
 
   ngOnInit(): void {
     // dataTables
@@ -43,10 +45,32 @@ export class ReservationHabitacionesComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       processing: true,
+      paging: true,
+      dom: 'Pfrtip',
+      select: {
+        style: 'multi', // o 'single' si solo quieres seleccionar uno a la vez
+        selector: 'td:first-child', // Asegurar que el selector funciona bien
+      },
+      columnDefs: [
+        {
+          targets: [0, 1, 2, 3, 4, 5],
+          visible: true,
+          searchPanes: { show: true },
+        },
+      ],
+      searchPanes: {
+        columns: [1, 4, 5], // Solo incluir columnas relevantes (excluir "Acciones")
+        dtOpts: {
+          select: {
+            style: 'multi',
+          },
+        },
+      },
       language: {
-        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
       },
     };
+
     // -------------------------------
     this.cargarTiposHabitacion();
 
@@ -95,7 +119,7 @@ export class ReservationHabitacionesComponent implements OnInit {
     this.mostrarModal = false;
     this.habitacionSeleccionada = null;
   }
-  
+
   reservar(): void {
     if (!this.fechaInicio || !this.fechaFin) {
       alert('Selecciona una fecha de inicio y fin');

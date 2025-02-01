@@ -12889,7 +12889,6 @@ span.flatpickr-weekday {
     transform: scale(1);
   }
 }
-
 .modal {
   animation: sweetAlertModalOpen 0.4s cubic-bezier(0.36, 2.24, 0.66, 0.64);
 }

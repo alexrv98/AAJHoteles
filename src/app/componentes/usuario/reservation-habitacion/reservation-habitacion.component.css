@@ -1,0 +1,4 @@
+.dtsp-pane table tbody tr.dtsp-selected {
+  background-color: #007bff !important;
+  color: white !important;
+}
