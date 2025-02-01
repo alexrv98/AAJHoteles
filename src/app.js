@@ -43316,3 +43316,10 @@
     })();
 })();
 //# sourceMappingURL=app.js.map
+setTimeout(() => {
+  $('.dtsp-selected').css({
+    'background-color': '#007bff',
+    'color': 'white',
+    'font-weight': 'bold'
+  });
+}, 500);

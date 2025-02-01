@@ -26,14 +26,17 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
-              "node_modules/datatables.net-searchpanes-dt/css/searchPanes.dataTables.css"
+              "https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css",
+              "node_modules/datatables.net-searchpanes-dt/css/searchPanes.dataTables.css",
+              "node_modules/datatables.net-select-bs5/css/select.bootstrap5.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/datatables.net/js/dataTables.min.js",
               "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js",
-              "node_modules/datatables.net-searchpanes/js/dataTables.searchPanes.js"
+              "node_modules/datatables.net-searchpanes/js/dataTables.searchPanes.js",
+              "node_modules/datatables.net-select/js/dataTables.select.min.js",
+              "node_modules/datatables.net-select-bs5/js/select.bootstrap5.js"
             ]
           },
           "configurations": {

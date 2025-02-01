@@ -1,15 +1,11 @@
 <app-navusuario></app-navusuario>
-<link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/searchpanes/2.1.1/css/searchPanes.dataTables.min.css"
-/>
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Habitaciones Disponibles</h2>
   </div>
 
-  <div *ngIf="habitaciones.length > 0; else noHabitaciones">
+  <div class="pb-5" *ngIf="habitaciones.length > 0; else noHabitaciones">
     <table
       class="table table-bordered row-border hover center"
       datatable
