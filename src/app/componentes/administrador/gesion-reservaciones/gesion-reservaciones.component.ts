@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GestionreservacionesService } from '../../../services/gestionreservaciones.service';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from '../../home/home.component';
@@ -15,7 +15,8 @@ export class GesionReservacionesComponent implements OnInit {
   reservacionSeleccionada: any;
   estados = ['pendiente', 'confirmada', 'cancelada'];
 
-  constructor(private GestionreservacionesService: GestionreservacionesService) {}
+  constructor(private GestionreservacionesService: GestionreservacionesService, private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.obtenerReservaciones();
@@ -42,6 +43,14 @@ export class GesionReservacionesComponent implements OnInit {
 
   actualizarEstado(): void {
     if (this.reservacionSeleccionada && this.reservacionSeleccionada.estado) {
+      // Verificar si el estado es "cancelada" y preguntar por confirmación
+      if (this.reservacionSeleccionada.estado === 'cancelada') {
+        const confirmarCancelacion = confirm("¿Estás seguro de que deseas cancelar esta reservación?");
+        if (!confirmarCancelacion) {
+          return; // Si no confirma, no hacer nada
+        }
+      }
+  
       this.GestionreservacionesService.actualizarEstadoReservacion(
           this.reservacionSeleccionada.reservacion_id,
           this.reservacionSeleccionada.estado
@@ -49,9 +58,9 @@ export class GesionReservacionesComponent implements OnInit {
         .subscribe(
           (response) => {
             if (response.status === 'success') {
-              this.obtenerReservaciones(); 
+              this.obtenerReservaciones(); // Recargar las reservaciones
               alert('Estado actualizado exitosamente');
-              this.reservacionSeleccionada = null; 
+              this.reservacionSeleccionada = null; // Cerrar el modal
             } else {
               alert('Error al actualizar el estado');
             }
@@ -64,5 +73,11 @@ export class GesionReservacionesComponent implements OnInit {
     } else {
       alert('Por favor, seleccione un estado');
     }
+  }
+  
+
+  agregarReservacion(nuevaReservacion: any): void {
+    this.reservaciones.push(nuevaReservacion);
+    this.cdRef.detectChanges();  
   }
 }
