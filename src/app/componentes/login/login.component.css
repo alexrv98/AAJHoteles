@@ -1,103 +1,61 @@
-/* Centra el contenedor principal */
+.bg-light {
+  background: #f8f9fa;
+}
+
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: rgba(185, 185, 185, 0.1);
-    font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  }
+.login-card {
+  width: 400px;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-  .brand-logo {
-    height: 130px;
-    width: auto;
-  }
-  
-  /* Tarjeta de inicio de sesión */
-  .login-card {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  /* Títulos */
-  .login-card h2 {
-    margin-bottom: 1rem;
-    color: #333;
-  }
-  
-  /* Grupo de formulario */
-  .form-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
-  }
-  
-  /* Etiquetas */
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #555;
-  }
-  
-  /* Entradas */
-  input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
-  
-  input:focus {
-    border-color: #4c8bf5;
-    outline: none;
-  }
-  
-  /* Botón primario */
-  .btn-primary {
-    width: 100%;
-    padding: 0.75rem;
-    background: #4c8bf5;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background: #6a11cb;
-  }
-  
-  /* Enlace de registro */
-  .register-link p {
-    margin-top: 1rem;
-    color: #555;
-  }
-  
-  .register-link a {
-    color: #4c8bf5;
-    text-decoration: none;
-  }
-  
-  .register-link a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Mensaje de error */
-  .error {
-    color: #d9534f;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-  }
-  
+.brand-logo {
+  border-radius: 10px;
+}
+
+h4 {
+  font-size: 22px; 
+  font-weight: bold;
+}
+
+p {
+  font-size: 14px;
+}
+
+.form-label {
+  font-size: 15px;
+}
+
+.input-group-text {
+  background: #e9ecef;
+  border: none;
+  color: #495057;
+  font-size: 20px;
+}
+
+.form-control {
+  background: #ffffff;
+  border: 1px solid #ced4da;
+  color: #495057;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.btn {
+  font-size: 15px;
+  padding: 12px;
+}
