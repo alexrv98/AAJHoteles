@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lugares',
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './lugares.component.html',
   styleUrls: ['./lugares.component.css'],
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class LugaresComponent implements OnInit {
   lugares: any[] = [];
   lugaresFiltrados: any[] = [];
-  textoBusqueda: string = ''; 
+  textoBusqueda: string = '';
 
   lugaresService: LugaresService = inject(LugaresService);
 
@@ -29,7 +29,7 @@ export class LugaresComponent implements OnInit {
       next: (response) => {
         if (response.status === 'success') {
           this.lugares = response.data;
-          this.lugaresFiltrados = response.data; 
+          this.lugaresFiltrados = response.data;
         } else {
           console.error('Error al obtener lugares:', response.message);
         }
@@ -41,7 +41,7 @@ export class LugaresComponent implements OnInit {
   }
 
   buscar(event: Event): void {
-    event.preventDefault(); 
+    event.preventDefault();
 
     if (!this.textoBusqueda) {
       this.lugaresFiltrados = this.lugares;

@@ -28,7 +28,10 @@
               "src/styles.css",
               "https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css",
               "node_modules/datatables.net-searchpanes-dt/css/searchPanes.dataTables.css",
-              "node_modules/datatables.net-select-bs5/css/select.bootstrap5.css"
+              "node_modules/datatables.net-select-bs5/css/select.bootstrap5.css",
+              "node_modules/datatables.net-searchpanes-dt/css/searchPanes.dataTables.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -89,7 +92,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css"],
+            "styles": ["src/styles.css",  "node_modules/bootstrap-icons/font/bootstrap-icons.css"          ],
             "scripts": []
           }
         }

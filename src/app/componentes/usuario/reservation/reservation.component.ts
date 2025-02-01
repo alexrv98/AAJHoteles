@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservacionService } from '../../../services/reservacion.service';
-import { Router, RouterLink } from '@angular/router';  
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,8 +9,8 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css']
-
 })
+
 export class reservationComponent implements OnInit {
   lugares: any[] = [];
   hoteles: any[] = [];
@@ -25,6 +25,7 @@ export class reservationComponent implements OnInit {
   fechaFin: string = '';
   precioHabitacion: number = 0;
   imagenLugar: string = '';
+  lugarSeleccionado: any = null; // Nuevo atributo para almacenar la información del lugar seleccionado
 
   constructor(private usuarioService: ReservacionService, private router: Router) { }
 
@@ -51,12 +52,12 @@ export class reservationComponent implements OnInit {
 
   cargarHoteles() {
     if (this.lugarId) {
-      const lugarSeleccionado = this.lugares.find(lugar => lugar.id == this.lugarId);
-      this.imagenLugar = lugarSeleccionado ? lugarSeleccionado.imagen : '';
-
+      this.lugarSeleccionado = this.lugares.find(lugar => lugar.id == this.lugarId);
+      this.imagenLugar = this.lugarSeleccionado ? this.lugarSeleccionado.imagen : '';
       this.usuarioService.getHoteles(this.lugarId).subscribe(
         (data: any) => {
           this.hoteles = data.data;
+          this.lugarSeleccionado.hoteles = this.hoteles; // Asigna los hoteles al lugar seleccionado
         },
         error => {
           console.error('Error al cargar hoteles', error);

@@ -22,7 +22,7 @@ export class MisReservasComponent implements OnInit {
   }
 
   obtenerReservaciones(): void {
-    this.gestionreservacionesService.obtenerReservaciones().subscribe(
+    this.gestionreservacionesService.obtenerReservacionesUsuario().subscribe(
       (response) => {
         if (response.status === 'success') {
           this.reservaciones = response.data;

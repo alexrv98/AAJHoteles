@@ -17,7 +17,16 @@ export class GestionreservacionesService {
     return this.http.get(`${this.apiUrl}/listReservaciones.php`, {
       headers,
     });
+    
+  }
 
+  obtenerReservacionesCompleto(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.get(`${this.apiUrl}/listReservacionesCompleto.php`, {
+      headers,
+    });
   }
 
   actualizarEstadoReservacion(id: number, estado: string): Observable<any> {
