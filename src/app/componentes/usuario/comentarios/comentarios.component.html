@@ -20,18 +20,19 @@
         <div class="card-body">
           <h4 class="text-center">Comentarios y Calificaciones</h4>
 
-          <div class="form-group">
-            <label for="lugar">Selecciona un Lugar:</label>
+          <div class="form-group form-floating">
             <select [(ngModel)]="lugarId" class="form-select" id="lugar" (change)="cargarHoteles()">
               <option *ngFor="let lugar of lugares" [value]="lugar.id">{{ lugar.nombre }}</option>
             </select>
+            <label for="lugar">Selecciona un Lugar:</label>
           </div>
 
-          <div class="form-group mt-3">
-            <label for="hotel">Selecciona un Hotel:</label>
+
+          <div class="form-group form-floating mt-3">
             <select [(ngModel)]="hotelId" class="form-select" id="hotel" (change)="cargarComentarios()">
               <option *ngFor="let hotel of hoteles" [value]="hotel.id">{{ hotel.nombre }}</option>
             </select>
+            <label for="hotel">Selecciona un Hotel:</label>
           </div>
 
           <div *ngFor="let comentario of comentarios" class="mt-4">
@@ -65,9 +66,10 @@
             </div>
           </div>
 
-          <div class="form-group mt-4">
-            <label for="comentario">Agregar un comentario:</label>
+          <div class="form-group form-floating mt-4">
             <textarea [(ngModel)]="comentario" id="comentario" class="form-control" rows="4"></textarea>
+            <label for="comentario">Agregar un comentario:</label>
+
           </div>
 
 
