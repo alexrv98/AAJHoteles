@@ -228,7 +228,7 @@ export class LugaresComponent implements OnInit {
       console.error("No hay habitación seleccionada.");
       return;
     }
-
+//
     // Guardar la reserva pendiente
     localStorage.setItem('reservaPendiente', JSON.stringify({
       filtros: this.filtros,
