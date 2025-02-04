@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ReservationHabitacionService {
 
-  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
+  private apiUrl = 'http://192.168.1.102/HTLES/AAJHoteles/apisHoteles';
   
     constructor(private http: HttpClient) {}
   
