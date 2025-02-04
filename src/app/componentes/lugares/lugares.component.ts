@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import{trigger, style, animate, transition} from '@angular/animations';
+
 
 @Component({
   selector: 'app-lugares',
@@ -11,6 +13,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, RouterModule, FormsModule, RouterLink],
   templateUrl: './lugares.component.html',
   styleUrls: ['./lugares.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class LugaresComponent implements OnInit {
   lugares: any[] = [];
