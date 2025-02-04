@@ -5,7 +5,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import{trigger, style, animate, transition} from '@angular/animations';
-
+//
 
 @Component({
   selector: 'app-lugares',
