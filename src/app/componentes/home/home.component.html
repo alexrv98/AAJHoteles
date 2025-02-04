@@ -17,11 +17,11 @@
 
       <div>
         <button
-          class="btn btn-outline-danger"
-          routerLinkActive="router-link-active"
-          (click)="logout()"
-        >
-          Cerrar sesión
+        class="btn btn-outline-danger me-2"
+        [routerLink]="['/']"
+        (click)="logout()"
+      >
+        Cerrar sesión
         </button>
       </div>
     </div>

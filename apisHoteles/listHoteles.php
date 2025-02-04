@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $lugar_id = intval($_GET['lugar_id']);
 
     try {
-        $stmt = $conn->prepare("SELECT id, nombre, descripcion, lugar_id, direccion, telefono, estrellas FROM hoteles WHERE lugar_id = :lugar_id");
+        $stmt = $conn->prepare("SELECT id, nombre, descripcion, lugar_id, direccion, telefono, imagenes FROM hoteles WHERE lugar_id = :lugar_id");
         $stmt->bindParam(':lugar_id', $lugar_id, PDO::PARAM_INT);
         $stmt->execute();
         $hoteles = $stmt->fetchAll(PDO::FETCH_ASSOC);

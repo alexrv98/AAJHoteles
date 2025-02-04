@@ -6,11 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.1.102/sistemaExam/api';
+  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
   constructor(private http: HttpClient) {}
 
   login(correo: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login.php`, { correo, password });
+  }
+
+  getUserData(): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return new Observable(observer => {
+        observer.error('Usuario no autenticado');
+      });
+    }
+    return this.http.get(`${this.apiUrl}/usuario.php`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
   }
 
   saveToken(token: string, role: string, name: string): void {
@@ -26,7 +38,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userRole');
-    localStorage.removeItem('Username');
+    localStorage.removeItem('username');
   }
 
   register(data: any): Observable<any> {
@@ -36,4 +48,17 @@ export class AuthService {
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
   }
+  estaAutenticado(): boolean {
+    const token = localStorage.getItem('authToken');
+    return !!token; // Retorna true si el token existe, de lo contrario false
+
+  }
+
+  // Método para verificar si el usuario está autenticado
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');
+    return !!token; // Retorna true si el token existe, de lo contrario false
+  }
+
+  
 }

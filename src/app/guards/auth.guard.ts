@@ -11,11 +11,13 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const token = this.authService.getToken();
     const userRole = this.authService.getUserRole();
+    
 
     if (!token) {
       this.router.navigate(['/']);
       return false;
     }
+
 
     if (userRole === 'admin') {
       return true; 
@@ -28,6 +30,7 @@ export class AuthGuard implements CanActivate {
         route.routeConfig?.path === 'comentario' ||
         route.routeConfig?.path === 'home' ||
         route.routeConfig?.path === 'misreservas' ||
+        route.routeConfig?.path === 'reserva-con-cuenta' ||
         route.routeConfig?.path?.startsWith('lugar-hoteles') ||
         route.routeConfig?.path?.startsWith('habitacionesUsuario')) 
     ) {

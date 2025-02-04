@@ -1,23 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root',
 })
 export class LugaresService {
-  private apiUrl = 'http://192.168.1.102/sistemaExam/api';
+  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
 
   constructor(private http: HttpClient) {}
 
   obtenerLugares(): Observable<any> {
-    const token = localStorage.getItem('authToken');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`, {
-      headers,
-    });
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
   }
+
+  obtenerHotelesDisponibles(filtros: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/buscarHoteles.php`, filtros);
+  }
+
+  obtenerHabitacionesDisponibles(hotelId: number, filtros: any): Observable<any> {
+    const params = { hotelId, ...filtros };
+    return this.http.post(`${this.apiUrl}/buscarHabitaciones.php`, params);
+  }
+
+  // Nuevo método para obtener comentarios de un hotel específico
+  obtenerComentarios(hotel_id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/comentarios.php?hotel_id=${hotel_id}`);
+  }
+
+
+  //admin
 
   obtenerLugaById(id: number): Observable<any> {
     const token = localStorage.getItem('authToken');

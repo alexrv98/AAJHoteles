@@ -1,37 +1,161 @@
-<div class="container mt-2">
-  <div class="row m-5">
-    <form class="d-flex" (submit)="buscar($event)">
-      <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Buscar"
-        aria-label="Buscar"
-        [(ngModel)]="textoBusqueda"
-        name="busqueda"
-      />
-      <button class="btn btn-outline-primary me-2" type="submit">Buscar</button>
-    </form>
-  </div>
-</div>
-
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let lugar of lugaresFiltrados">
-      <div class="card shadow-sm">
-        <img [src]="lugar.imagen" alt="lugar" class="card" height="200" />
-        <div class="card-body">
-          <h5 class="card-title">{{ lugar.nombre }}</h5>
-          <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
-          <p>{{ lugar.ubicacion }}</p>
-
-          <a
-            [routerLink]="['/lugar-hoteles', lugar.id]"
-            routerLinkActive="router-link-active"
-            class="btn btn-primary w-100"
-            >Más información</a
-          >
-        </div>
+  <!-- Filtro -->
+  <div class="card p-3 mb-4">
+    <div class="row">
+      <div class="col-md-5">
+        <label for="destino">¿A qué lugar deseas ir?</label>
+        <select class="form-control" id="destino" [(ngModel)]="filtros.destino" (change)="actualizarUbicacion()">
+          <option *ngFor="let lugar of lugares" [value]="lugar.id">{{ lugar.nombre }} - {{ lugar.ubicacion }}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="fechaInicio">Fecha de entrada</label>
+        <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="filtros.fechaInicio">
+      </div>
+      <div class="col-md-2">
+        <label for="fechaFin">Fecha de salida</label>
+        <input type="date" class="form-control" id="fechaFin" [(ngModel)]="filtros.fechaFin">
+      </div>
+      <div class="col-md-2">
+        <label for="huespedes">Huéspedes</label>
+        <input type="number" class="form-control" id="huespedes" [(ngModel)]="filtros.huespedes" min="1">
+      </div>
+      <div class="col-md-1 d-flex align-items-end">
+        <button class="btn btn-primary w-100" (click)="buscarHoteles()">Buscar</button>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <!-- Hoteles encontrados -->
+      <div *ngIf="hotelesDisponibles.length > 0 && !hotelSeleccionado">
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesDisponibles">
+            <div class="card shadow-sm">
+              <img [src]="hotel.imagenes" alt="hotel" class="card-img-top" height="200">
+              <div class="card-body">
+                <h5 class="card-title">{{ hotel.nombre }}</h5>
+                <p><strong>Ubicación:</strong> {{ hotel.ubicacion }}</p>
+                <p><strong>Descripción:</strong> {{ hotel.descripcion }}</p>
+
+                <!-- Apartado de reseñas -->
+                <div *ngIf="hotel.comentarios && hotel.comentarios.length > 0">
+                  <div class="d-flex align-items-center mb-2">
+                    <p class="mb-0"><strong>Calificación promedio:</strong></p>
+                    <div class="ms-2">
+                      <span *ngFor="let star of getStarArray(hotel.promedioEstrellas)" class="text-warning">⭐</span>
+                      <span class="ms-1 text-muted">({{ hotel.promedioEstrellas.toFixed(1) }})</span>
+                    </div>
+                  </div>
+                  <a [routerLink]="['/comentario', hotel.id]" class="ms-2 text-primary fw-bold"
+                    style="cursor: pointer;">
+                    Ver reseñas
+                  </a>
+                </div>
+                <div *ngIf="hotel.comentarios && hotel.comentarios.length === 0">
+                  <p class="text-muted">No hay reseñas aún.</p>
+                </div>
+
+
+                <button class="btn btn-primary w-100" (click)="verHabitaciones(hotel)">Ver habitaciones</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Habitaciones disponibles -->
+      <div *ngIf="habitacionesDisponibles.length > 0 && hotelSeleccionado">
+        <h3>Habitaciones disponibles en {{ hotelSeleccionado.nombre }}</h3>
+        <h3>Mejor opción</h3>
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let habitacion of habitacionesDisponibles">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Habitación {{ habitacion.numero_habitacion }}</h5>
+                <p><strong>Tipo:</strong> {{ habitacion.tipo_habitacion }}</p>
+                <p><strong>Capacidad:</strong> {{ habitacion.capacidad }} personas</p>
+                <p><strong>Camas:</strong> {{ habitacion.camas }}</p>
+                <p><strong>Precio por noche:</strong> ${{ habitacion.precio }}</p>
+                <button class="btn btn-success w-100" (click)="agregarHabitacion(habitacion)">Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Otras habitaciones disponibles -->
+      <div *ngIf="otrasHabitacionesDisponibles.length > 0">
+        <h4>Otras habitaciones disponibles:</h4>
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let habitacion of otrasHabitacionesDisponibles">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Habitación {{ habitacion.numero_habitacion }}</h5>
+                <p><strong>Tipo:</strong> {{ habitacion.tipo_habitacion }}</p>
+                <p><strong>Capacidad:</strong> {{ habitacion.capacidad }} personas</p>
+                <p><strong>Camas:</strong> {{ habitacion.camas }}</p>
+                <p><strong>Precio por noche:</strong> ${{ habitacion.precio }}</p>
+                <button class="btn btn-success w-100" (click)="agregarHabitacion(habitacion)">Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cuadro de resumen fijo a la derecha -->
+    <div *ngIf="habitacionSeleccionada" class="position-fixed top-50 end-0 translate-middle-y me-4"
+      style="width: 300px;">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h5>Resumen de la reserva</h5>
+          <p><strong>Habitación:</strong> {{ habitacionSeleccionada.numero_habitacion }}</p>
+          <p><strong>Precio por noche:</strong> ${{ habitacionSeleccionada.precio }}</p>
+          <p><strong>Total por {{ filtros.dias }} días:</strong> ${{ totalReserva }}</p>
+
+          <button *ngIf="isLoggedIn" class="btn btn-primary w-100 mb-2" (click)="confirmarReserva()">Continuar con la
+            reserva</button>
+          <button *ngIf="!isLoggedIn" class="btn btn-primary w-100 mb-2" (click)="confirmarReserva()">Iniciar sesión
+            para reservar</button>
+
+          <button class="btn btn-secondary w-100" (click)="reservarSinCuenta()">Continuar sin cuenta</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="reserva" class="card mt-4">
+      <div class="card-body">
+        <h4>Resumen de la reserva</h4>
+        <p><strong>Habitación:</strong> {{ reserva.habitacion.numero_habitacion }} - {{
+          reserva.habitacion.tipo_habitacion }}</p>
+        <p><strong>Fechas:</strong> {{ reserva.fechaInicio }} al {{ reserva.fechaFin }}</p>
+        <p><strong>Duración:</strong> {{ reserva.dias }} días</p>
+        <p><strong>Total a pagar:</strong> ${{ reserva.total }}</p>
+        <button class="btn btn-primary" (click)="reservarHabitacion(reserva.habitacion)">Reservar</button>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="container mt-4">
+    <h2>Lugares Turisticos</h2> <br>
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let lugar of lugaresFiltrados">
+        <div class="card shadow-sm">
+          <img [src]="lugar.imagen" alt="lugar" class="card" height="200" />
+          <div class="card-body">
+            <h5 class="card-title">{{ lugar.nombre }}</h5>
+            <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
+            <p>{{ lugar.ubicacion }}</p>
+
+            <a [routerLink]="['/lugar-hoteles', lugar.id]" routerLinkActive="router-link-active"
+              class="btn btn-primary w-100">Más información</a>
+          </div>
+        </div>
+      </div>
+    </div>

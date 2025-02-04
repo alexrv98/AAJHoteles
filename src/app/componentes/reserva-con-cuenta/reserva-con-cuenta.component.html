@@ -1,0 +1,49 @@
+<app-navusuario></app-navusuario>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Información del Usuario -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header text-center text-white encabezado">
+                    <h4>Reserva con Cuenta</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div *ngIf="usuario">
+                        <h5 class="fw-bold">Hola, {{ usuario.nombre }}!</h5>
+                        <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información de la Reserva -->
+        <div class="col-md-6 mt-4 mt-md-0">
+            <div class="card shadow-sm border-0">
+                <div class="card-header text-center text-white encabezado">
+                    <h5>Información de la Reserva</h5>
+                </div>
+                <div class="card-body resumen">
+                    <div *ngIf="habitacionSeleccionada">
+                        <p><strong>Habitación:</strong> {{ habitacionSeleccionada.tipo_habitacion }}</p>
+                        <p><strong>Capacidad:</strong> {{ habitacionSeleccionada.capacidad }} personas</p>
+                        <p><strong>Camas:</strong> {{ habitacionSeleccionada.camas }}</p>
+                        <p><strong>Total a pagar:</strong> ${{ totalReserva }}</p>
+                        <p><strong>Fecha de inicio:</strong> {{ fechaInicio | date: 'shortDate' }}</p>
+                        <p><strong>Fecha de fin:</strong> {{ fechaFin | date: 'shortDate' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="paypal-button-container" class="mt-3"></div>
+
+   <!-- Botón para confirmar la reserva -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6 text-center">
+        <button class="btn boton-reserva w-100" (click)="confirmarReserva()" [disabled]="!pagoConfirmado">
+            <i class="bi bi-check-circle"></i> Confirmar Reserva
+        </button>
+    </div>
+</div>
+</div>

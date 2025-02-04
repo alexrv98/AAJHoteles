@@ -6,50 +6,38 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ComentarioService {
-  private apiUrl = 'http://192.168.1.102/sistemaExam/api';
+  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
 
   constructor(private http: HttpClient) {}
 
-  private crearHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders({
-      Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': 'application/json',
-    });
-  }
-
   getLugares(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`, {
-      headers: this.crearHeaders(),
-    });
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
   }
 
   getHotelesPorLugar(lugar_id: number): Observable<any> {
-    return this.http.get(
-      `${this.apiUrl}/listHoteles.php?lugar_id=${lugar_id}`,
-      {
-        headers: this.crearHeaders(),
-      }
-    );
+    return this.http.get(`${this.apiUrl}/listHoteles.php?lugar_id=${lugar_id}`);
   }
 
   getComentarios(hotel_id: number): Observable<any> {
-    return this.http.get(
-      `${this.apiUrl}/comentarios.php?hotel_id=${hotel_id}`,
-      {
-        headers: this.crearHeaders(),
-      }
-    );
+    return this.http.get(`${this.apiUrl}/comentarios.php?hotel_id=${hotel_id}`);
   }
 
-  agregarComentario(
-    hotel_id: number,
-    calificacion: number,
-    comentario: string
-  ): Observable<any> {
-    const data = { hotel_id, calificacion, comentario };
-    return this.http.post(`${this.apiUrl}/comentarios.php`, data, {
-      headers: this.crearHeaders(),
+  agregarComentario(hotelId: number, calificacion: number, comentario: string): Observable<any> {
+    const token = localStorage.getItem('authToken'); 
+
+    if (!token) {
+      console.error('No hay token disponible');
+      return new Observable(); 
+    }
+
+    // Agregar el token en los headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
     });
+
+    const body = { hotel_id: hotelId, calificacion, comentario };
+
+    return this.http.post(`${this.apiUrl}/comentarios.php`, body, { headers });
   }
 }

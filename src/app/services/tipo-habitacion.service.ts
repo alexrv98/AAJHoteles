@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TiposHabitacionService {
-  private apiUrl = 'http://192.168.1.102/sistemaExam/api'; 
+  private apiUrl = 'http://192.168.1.73:8080/apisHoteles'; 
 
   constructor(private http: HttpClient) {}
 

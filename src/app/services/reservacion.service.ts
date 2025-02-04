@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ReservacionService {
-  private apiUrl = 'http://192.168.1.102/sistemaExam/api';
+  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +18,8 @@ export class ReservacionService {
       'Content-Type': 'application/json',
     });
   }
+
+  
 
   getLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`, {

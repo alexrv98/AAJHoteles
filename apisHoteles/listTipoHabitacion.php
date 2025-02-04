@@ -7,18 +7,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $usuario = verificarToken(); 
 
     try {
-        $stmt = $conn->prepare("SELECT id, nombre, descripcion, ubicacion, imagen FROM lugares_turisticos");
+        $stmt = $conn->prepare("SELECT id, nombre, capacidad, camas FROM tipos_habitacion");
         $stmt->execute();
-        $lugares = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tipos_habitacion = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo json_encode([
             "status" => "success",
-            "data" => $lugares
-                ]);
+            "data" => $tipos_habitacion
+        ]);
     } catch (PDOException $e) {
         echo json_encode([
             "status" => "error",
-            "message" => "Error al obtener los lugares turísticos: " . $e->getMessage()
+            "message" => "Error al obtener los tipos de habitación: " . $e->getMessage()
         ]);
     }
 }

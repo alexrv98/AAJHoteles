@@ -8,7 +8,6 @@
       <thead class="table-light">
         <tr>
           <th>No</th>
-          <th>Usuario</th>
           <th>Hotel</th>
           <th>Lugar Turístico</th>
           <th>Habitación</th>
@@ -16,6 +15,7 @@
           <th>Capacidad</th>
           <th>Camas</th>
           <th>Precio</th>
+          <th>Precio Total</th>
           <th>Fecha de Inicio</th>
           <th>Fecha de Fin</th>
           <th>Estado</th>
@@ -25,7 +25,6 @@
       <tbody>
         <tr *ngFor="let reservacion of reservaciones; let i = index">
           <td>{{ i + 1 }}</td> 
-          <td>{{ reservacion.nombre_usuario }}</td>
           <td>{{ reservacion.nombre_hotel }}</td>
           <td>{{ reservacion.nombre_lugar_turistico }}</td>
           <td>{{ reservacion.numero_habitacion }}</td>
@@ -33,6 +32,7 @@
           <td>{{ reservacion.capacidad }} personas</td>
           <td>{{ reservacion.camas }} camas</td>
           <td>${{ reservacion.precio | number:'1.2-2' }}</td>
+          <td>${{ reservacion.total_a_pagar | number:'1.2-2' }}</td>
           <td>{{ reservacion.fecha_inicio | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>{{ reservacion.fecha_fin | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>{{ reservacion.estado }}</td>

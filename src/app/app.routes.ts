@@ -9,26 +9,25 @@ import { HabitacionesComponent } from './componentes/administrador/hoteles/habit
 import { HomeComponent } from './componentes/home/home.component';
 import { reservationComponent } from './componentes/usuario/reservation/reservation.component';
 import { TiposHabitacionComponent } from './componentes/administrador/tipos-habitacion/tipos-habitacion.component';
-import { GestionreservacionesService } from './services/gestionreservaciones.service';
 import { GesionReservacionesComponent } from './componentes/administrador/gesion-reservaciones/gesion-reservaciones.component';
 import { LugarHotelesComponent } from './componentes/lugar-hoteles/lugar-hoteles.component';
 import { ComentariosComponent } from './componentes/usuario/comentarios/comentarios.component';
-import { ReservationHabitacionService } from './services/reservation-habitacion.service';
 import { ReservationHabitacionesComponent } from './componentes/usuario/reservation-habitacion/reservation-habitacion.component';
 import { MisReservasComponent } from './componentes/usuario/misreservas/misreservas.component';
+import { ReservaSinCuentaComponent } from './componentes/reserva-sin-cuenta/reserva-sin-cuenta.component';
+import { ReservaConCuentaComponent } from './componentes/reserva-con-cuenta/reserva-con-cuenta.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+
+  { path: '', component: UsuarioComponent, title: 'usuario'},
+  { path: 'home', component: HomeComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent, title: 'registro' },
+  { path: 'reserva-sin-cuenta', component: ReservaSinCuentaComponent },
+  { path: 'reserva-con-cuenta', component: ReservaConCuentaComponent },
   {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'comentario',
-    component: ComentariosComponent,
-    title: 'comentario',
-    canActivate: [AuthGuard],
+    path: 'comentario/:id',
+    component: ComentariosComponent
   },
   {
     path: 'admin',
@@ -46,22 +45,15 @@ export const routes: Routes = [
   {
     path: 'lugar-hoteles/:id',
     component: LugarHotelesComponent,
-    canActivate: [AuthGuard],
     title: 'hoteles',
   },
 
   {
     path: 'habitaciones/:id',
     component: HabitacionesComponent,
-    canActivate: [AuthGuard],
     title: 'habitaciones',
   },
-  {
-    path: 'usuario',
-    component: UsuarioComponent,
-    canActivate: [AuthGuard],
-    title: 'usuario',
-  },
+ 
   {
     path: 'misreservas',
     component: MisReservasComponent,
@@ -91,7 +83,6 @@ export const routes: Routes = [
   },
 
 
-  { path: 'registro', component: RegistroComponent, title: 'registro' },
   {
     path: 'reservacion',
     component: reservationComponent,

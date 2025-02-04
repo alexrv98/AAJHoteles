@@ -1,0 +1,21 @@
+
+/* Botón de confirmación */
+.boton-reserva {
+    background-color: #007b9e;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 5px;
+}
+
+.boton-reserva:hover {
+    background-color: #005f75;
+    transform: scale(1.02);
+}
+
+/* Estilo para el resumen */
+.resumen {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
