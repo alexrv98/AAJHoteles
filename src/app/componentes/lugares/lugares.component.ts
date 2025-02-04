@@ -116,7 +116,6 @@ export class LugaresComponent implements OnInit {
       this.filtros.ubicacion = lugarSeleccionado.ubicacion;
     }
   }
-
   buscarHoteles(): void {
     this.hotelesDisponibles = [];
     this.hotelSeleccionado = null;
@@ -140,6 +139,8 @@ export class LugaresComponent implements OnInit {
                   hotel.comentarios = [];
                   hotel.promedioEstrellas = 0;
                 }
+
+                this.ordenarHoteles();
               },
               error: (error) => {
                 console.error('Error al obtener comentarios:', error);
@@ -157,11 +158,7 @@ export class LugaresComponent implements OnInit {
       },
     });
   }
-  ordenarHoteles(): void {
-    if (this.filtros.orden === 'mejoresReseñas') {
-      this.hotelesDisponibles.sort((a, b) => b.promedioEstrellas - a.promedioEstrellas);
-    }
-  }
+
   calcularPromedioEstrellas(comentarios: any[]): number {
     if (comentarios.length === 0) return 0;
     const sumaEstrellas = comentarios.reduce((sum, comentario) => sum + comentario.calificacion, 0);
@@ -198,6 +195,8 @@ export class LugaresComponent implements OnInit {
         if (response.status === 'success' && response.data) {
           this.habitacionesDisponibles = response.data.mejorOpcion;
           this.otrasHabitacionesDisponibles = response.data.otrasHabitaciones;
+
+          this.habitacionesFiltradas = [...this.habitacionesDisponibles];
         } else {
           console.error('Error al obtener habitaciones:', response.message);
         }

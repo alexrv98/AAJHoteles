@@ -1,77 +1,122 @@
 <app-home></app-home>
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Habitaciones Disponibles</h2>
-      <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Habitación</button>
-    </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Habitaciones Disponibles</h2>
+    <button class="btn btn-primary" (click)="abrirModalAgregar()">
+      Agregar Habitación
+    </button>
+  </div>
 
-    <div *ngIf="habitaciones.length > 0; else noHabitaciones">
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>Número.</th>
-            <th>Tipo</th>
-            <th>Personas</th>
-            <th>Camas</th>
-            <th>Precio</th>
-            <th>Disponibilidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let habitacion of habitaciones">
-            <td>{{ habitacion.numero_habitacion }}</td>
-            <td>{{ habitacion.tipo }}</td>
-            <td>{{ habitacion.capacidad }}</td>
-            <td>{{ habitacion.camas }}</td>
-            <td>{{ habitacion.precio | currency }}</td>
-            <td>
-              <span class="badge bg-success" *ngIf="habitacion.disponibilidad">Disponible</span>
-              <span class="badge bg-danger" *ngIf="!habitacion.disponibilidad">Ocupada</span>
-            </td>
-            <td>
-                <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(habitacion)">Editar</button>
-                <button class="btn btn-danger btn-sm" (click)="eliminarHabitacion(habitacion.id)">Eliminar</button>
-              </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div *ngIf="habitaciones.length > 0; else noHabitaciones">
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Número.</th>
+          <th>Tipo</th>
+          <th>Personas</th>
+          <th>Camas</th>
+          <th>Precio</th>
+          <th>Disponibilidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let habitacion of habitaciones">
+          <td>{{ habitacion.numero_habitacion }}</td>
+          <td>{{ habitacion.tipo }}</td>
+          <td>{{ habitacion.capacidad }}</td>
+          <td>{{ habitacion.camas }}</td>
+          <td>{{ habitacion.precio | currency }}</td>
+          <td>
+            <span class="badge bg-success" *ngIf="habitacion.disponibilidad"
+              >Disponible</span
+            >
+            <span class="badge bg-danger" *ngIf="!habitacion.disponibilidad"
+              >Ocupada</span
+            >
+          </td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm me-2"
+              (click)="abrirModalEditar(habitacion)"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="eliminarHabitacion(habitacion.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <ng-template #noHabitaciones>
-      <p>No hay habitaciones disponibles para este hotel.</p>
-    </ng-template>
+  <ng-template #noHabitaciones>
+    <p>No hay habitaciones disponibles para este hotel.</p>
+  </ng-template>
 </div>
 <!-- Modal para agregar habitación -->
+<div *ngIf="mostrarModalAgregar" class="modal-backdrop fade show"></div>
 <div *ngIf="mostrarModalAgregar" class="modal fade show d-block" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Agregar Habitación</h5>
-        <button type="button" class="btn-close" (click)="cerrarModalAgregar()"></button>
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title fw-bold text-white">Agregar Habitación</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="cerrarModalAgregar()"
+        ></button>
       </div>
       <div class="modal-body">
         <form #formAgregar="ngForm" (ngSubmit)="guardarHabitacion()">
           <div class="mb-3">
             <label class="form-label">Número de Habitación</label>
-            <input type="text" class="form-control" [(ngModel)]="nuevaHabitacion.numero_habitacion" name="numero_habitacion" required #numHabitacion="ngModel">
-            <div *ngIf="numHabitacion.invalid && numHabitacion.touched" class="text-danger">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="nuevaHabitacion.numero_habitacion"
+              name="numero_habitacion"
+              required
+              #numHabitacion="ngModel"
+            />
+            <div
+              *ngIf="numHabitacion.invalid && numHabitacion.touched"
+              class="text-danger"
+            >
               <small>El número de habitación es obligatorio.</small>
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Precio</label>
-            <input type="number" class="form-control" [(ngModel)]="nuevaHabitacion.precio" name="precio" required min="1" #precio="ngModel">
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="nuevaHabitacion.precio"
+              name="precio"
+              required
+              min="1"
+              #precio="ngModel"
+            />
             <div *ngIf="precio.invalid && precio.touched" class="text-danger">
-              <small *ngIf="precio.errors?.['required']">El precio es obligatorio.</small>
+              <small *ngIf="precio.errors?.['required']"
+                >El precio es obligatorio.</small
+              >
               <small *ngIf="precio.errors?.['min']">Debe ser mayor a 0.</small>
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Disponibilidad</label>
-            <select class="form-control" [(ngModel)]="nuevaHabitacion.disponibilidad" name="disponibilidad">
+            <select
+              class="form-control"
+              [(ngModel)]="nuevaHabitacion.disponibilidad"
+              name="disponibilidad"
+            >
               <option [value]="1">Disponible</option>
               <option [value]="0">No Disponible</option>
             </select>
@@ -79,15 +124,32 @@
 
           <div class="mb-3">
             <label class="form-label">Tipo de Habitación</label>
-            <select class="form-control" [(ngModel)]="nuevaHabitacion.tipo_habitacion_id" name="tipo_habitacion_id" required #tipoHabitacion="ngModel">
-              <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">{{ tipo.nombre }}</option>
+            <select
+              class="form-control"
+              [(ngModel)]="nuevaHabitacion.tipo_habitacion_id"
+              name="tipo_habitacion_id"
+              required
+              #tipoHabitacion="ngModel"
+            >
+              <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">
+                {{ tipo.nombre }}
+              </option>
             </select>
-            <div *ngIf="tipoHabitacion.invalid && tipoHabitacion.touched" class="text-danger">
+            <div
+              *ngIf="tipoHabitacion.invalid && tipoHabitacion.touched"
+              class="text-danger"
+            >
               <small>Debe seleccionar un tipo de habitación.</small>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success" [disabled]="formAgregar.invalid">Guardar</button>
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="formAgregar.invalid"
+          >
+            Guardar
+          </button>
         </form>
       </div>
     </div>
@@ -95,52 +157,115 @@
 </div>
 
 <!-- Modal para editar habitación -->
-<div *ngIf="habitacionSeleccionada" class="modal fade show d-block" tabindex="-1">
+<div *ngIf="habitacionSeleccionada" class="modal-backdrop fade show"></div>
+
+<div
+  *ngIf="habitacionSeleccionada"
+  class="modal fade show d-block"
+  tabindex="-1"
+>
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Editar Habitación</h5>
-        <button type="button" class="btn-close" (click)="cerrarModalEditar()"></button>
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title fw-bold text-white">Editar Habitación</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="cerrarModalEditar()"
+        ></button>
       </div>
       <div class="modal-body">
         <form #formEditar="ngForm">
           <div class="mb-3">
             <label class="form-label">Número de Habitación</label>
-            <input type="text" class="form-control" [(ngModel)]="habitacionSeleccionada.numero_habitacion" name="numero_habitacion" required #numHabitacionEdit="ngModel">
-            <div *ngIf="numHabitacionEdit.invalid && numHabitacionEdit.touched" class="text-danger">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="habitacionSeleccionada.numero_habitacion"
+              name="numero_habitacion"
+              required
+              #numHabitacionEdit="ngModel"
+            />
+            <div
+              *ngIf="numHabitacionEdit.invalid && numHabitacionEdit.touched"
+              class="text-danger"
+            >
               <small>El número de habitación es obligatorio.</small>
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Tipo de Habitación</label>
-            <select class="form-control" [(ngModel)]="habitacionSeleccionada.tipo_habitacion_id" name="tipo_habitacion_id" required #tipoHabitacionEdit="ngModel">
-              <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">{{ tipo.nombre }}</option>
+            <select
+              class="form-control"
+              [(ngModel)]="habitacionSeleccionada.tipo_habitacion_id"
+              name="tipo_habitacion_id"
+              required
+              #tipoHabitacionEdit="ngModel"
+            >
+              <option *ngFor="let tipo of tiposHabitacion" [value]="tipo.id">
+                {{ tipo.nombre }}
+              </option>
             </select>
-            <div *ngIf="tipoHabitacionEdit.invalid && tipoHabitacionEdit.touched" class="text-danger">
+            <div
+              *ngIf="tipoHabitacionEdit.invalid && tipoHabitacionEdit.touched"
+              class="text-danger"
+            >
               <small>Debe seleccionar un tipo de habitación.</small>
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Precio</label>
-            <input type="number" class="form-control" [(ngModel)]="habitacionSeleccionada.precio" name="precio" required min="1" #precioEdit="ngModel">
-            <div *ngIf="precioEdit.invalid && precioEdit.touched" class="text-danger">
-              <small *ngIf="precioEdit.errors?.['required']">El precio es obligatorio.</small>
-              <small *ngIf="precioEdit.errors?.['min']">Debe ser mayor a 0.</small>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="habitacionSeleccionada.precio"
+              name="precio"
+              required
+              min="1"
+              #precioEdit="ngModel"
+            />
+            <div
+              *ngIf="precioEdit.invalid && precioEdit.touched"
+              class="text-danger"
+            >
+              <small *ngIf="precioEdit.errors?.['required']"
+                >El precio es obligatorio.</small
+              >
+              <small *ngIf="precioEdit.errors?.['min']"
+                >Debe ser mayor a 0.</small
+              >
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label">Disponibilidad</label>
-            <select class="form-control" [(ngModel)]="habitacionSeleccionada.disponibilidad" name="disponibilidad">
+            <select
+              class="form-control"
+              [(ngModel)]="habitacionSeleccionada.disponibilidad"
+              name="disponibilidad"
+            >
               <option [value]="1">Disponible</option>
               <option [value]="0">Ocupada</option>
             </select>
           </div>
 
-          <button type="button" class="btn btn-primary" (click)="editarHabitacion()" [disabled]="formEditar.invalid">Guardar Cambios</button>
-          <button type="button" class="btn btn-secondary" (click)="cerrarModalEditar()">Cancelar</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="editarHabitacion()"
+            [disabled]="formEditar.invalid"
+          >
+            Guardar Cambios
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cerrarModalEditar()"
+          >
+            Cancelar
+          </button>
         </form>
       </div>
     </div>

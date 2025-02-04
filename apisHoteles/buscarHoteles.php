@@ -6,11 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inputJSON = file_get_contents('php://input');
     $data = json_decode($inputJSON, true);
 
-    // Recibir los datos desde la solicitud POST
-    $destino = $data['destino'];  // ID del destino (lugar turístico)
-    $fechaInicio = $data['fechaInicio'];  // Fecha de inicio de la reserva
-    $fechaFin = $data['fechaFin'];  // Fecha de fin de la reserva
-    $huespedes = $data['huespedes'];  // Número total de huéspedes
+    $destino = $data['destino']; 
+    $fechaInicio = $data['fechaInicio'];  
+    $fechaFin = $data['fechaFin'];  
+    $huespedes = $data['huespedes'];  
 
     try {
         $stmt = $conn->prepare("

@@ -4,7 +4,6 @@ require_once 'db.php';
 require_once 'jwt_verify.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $usuario = verificarToken(); 
 
     if (!isset($_GET['lugar_id'])) {
         echo json_encode([
