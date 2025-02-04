@@ -8,6 +8,7 @@ export class LugaresService {
   private apiUrl = 'http://localhost/apisHoteles';
 
   constructor(private http: HttpClient) {}
+  //hioa
 
   obtenerLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
