@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LugaresService {
-  private apiUrl = 'http://localhost/apisHoteles';
+  private apiUrl = 'http://192.168.1.102/HTLES/AAJHoteles/apisHoteles';
 
   constructor(private http: HttpClient) {}
   //hioa
