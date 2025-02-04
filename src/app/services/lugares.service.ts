@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LugaresService {
-  private apiUrl = 'http://192.168.1.73:8080/apisHoteles';
+  private apiUrl = 'http://localhost/apisHoteles';
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +17,10 @@ export class LugaresService {
     return this.http.post(`${this.apiUrl}/buscarHoteles.php`, filtros);
   }
 
-  obtenerHabitacionesDisponibles(hotelId: number, filtros: any): Observable<any> {
+  obtenerHabitacionesDisponibles(
+    hotelId: number,
+    filtros: any
+  ): Observable<any> {
     const params = { hotelId, ...filtros };
     return this.http.post(`${this.apiUrl}/buscarHabitaciones.php`, params);
   }
@@ -26,7 +29,6 @@ export class LugaresService {
   obtenerComentarios(hotel_id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/comentarios.php?hotel_id=${hotel_id}`);
   }
-
 
   //admin
 
