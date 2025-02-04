@@ -5,14 +5,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LugaresService {
-  private apiUrl = 'http://192.168.1.102/HTLES/AAJHoteles/apisHoteles';
+  private apiUrl = 'http://localhost/AAJHoteles/apisHoteles';
 
   constructor(private http: HttpClient) {}
 
   obtenerLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
   }
-
   obtenerHotelesDisponibles(filtros: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/buscarHoteles.php`, filtros);
   }
@@ -23,6 +22,16 @@ export class LugaresService {
   ): Observable<any> {
     const params = { hotelId, ...filtros };
     return this.http.post(`${this.apiUrl}/buscarHabitaciones.php`, params);
+  }
+
+
+  obtenerCategorias(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/categorias.php`);
+  }
+
+  obtenerLugaresPorCategoria(categoriaId: number): Observable<any> {
+    console.log("Consultando lugares por categoría:", categoriaId);  // Verificar el ID de categoría
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php?categoria_id=${categoriaId}`);
   }
 
   // Nuevo método para obtener comentarios de un hotel específico
