@@ -7,12 +7,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         if ($categoria_id) {
-            // Filtrar por categoría
-            $stmt = $conn->prepare("SELECT id, nombre, descripcion, ubicacion, imagen, categoria_id FROM lugares_turisticos WHERE categoria_id = :categoria_id");
+            $stmt = $conn->prepare("
+                SELECT lt.id, lt.nombre, lt.descripcion, lt.ubicacion, lt.imagen, c.nombre AS categoria 
+                FROM lugares_turisticos lt
+                JOIN categorias c ON lt.categoria_id = c.id
+                WHERE lt.categoria_id = :categoria_id
+            ");
             $stmt->bindParam(':categoria_id', $categoria_id, PDO::PARAM_INT);
         } else {
-            // Obtener todos los lugares si no se especifica una categoría
-            $stmt = $conn->prepare("SELECT id, nombre, descripcion, ubicacion, imagen, categoria_id FROM lugares_turisticos");
+            $stmt = $conn->prepare("
+                SELECT lt.id, lt.nombre, lt.descripcion, lt.ubicacion, lt.imagen, c.nombre AS categoria 
+                FROM lugares_turisticos lt
+                JOIN categorias c ON lt.categoria_id = c.id
+            ");
         }
 
         $stmt->execute();

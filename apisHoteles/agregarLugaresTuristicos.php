@@ -12,11 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion = isset($data['descripcion']) ? $data['descripcion'] : null;
     $ubicacion = isset($data['ubicacion']) ? $data['ubicacion'] : null;
     $imagen = isset($data['imagen']) ? $data['imagen'] : null;
+    $categoria_id = isset($data['categoria_id']) ? $data['categoria_id'] : null;
+
 
     if ($nombre && $descripcion && $ubicacion && $imagen) {
         try {
-            $stmt = $conn->prepare("INSERT INTO lugares_turisticos (nombre, descripcion, ubicacion, imagen) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$nombre, $descripcion, $ubicacion, $imagen]);
+            $stmt = $conn->prepare("INSERT INTO lugares_turisticos (nombre, descripcion, ubicacion, imagen, categoria_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$nombre, $descripcion, $ubicacion, $imagen,$categoria_id]);
 
             echo json_encode([
                 "status" => "success",
