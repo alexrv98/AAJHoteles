@@ -140,16 +140,6 @@ export class ReservaSinCuentaComponent implements OnInit {
         console.error('Error al enviar el correo:', error);
       });
     
-    
-  
-    // Enviar el correo usando EmailJS
-    emailjs.send('service_id', 'template_id', emailParams, 'user_id')
-      .then((response) => {
-        console.log('Correo enviado:', response);
-      })
-      .catch((error) => {
-        console.error('Error al enviar correo:', error);
-      });
   
     // Guardar la reserva
     this.reservaService.reservarSinCuenta(this.reserva).subscribe(

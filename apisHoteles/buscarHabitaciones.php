@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $habitacionesDisponibles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Dividir en "mejor opción" (la habitación que mejor se ajusta) y el resto
         $mejorOpcion = [];
         $otrasHabitaciones = [];
 
