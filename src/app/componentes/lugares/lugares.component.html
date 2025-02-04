@@ -1,16 +1,19 @@
 <header class="inicio-img">
   <section class="textos-header">
-    <div class="col-sm-5 p-5 align-items-center align-self-center">
-      <h1 class="fw-bold text-white text-center">
+    <div class="col-sm-5 p-5 align-items-center align-self-center text-center">
+      <h2 class="fw-bold text-white">
         Bienvenido a AAJ Hoteles, donde el lujo y la comodidad se encuentran
         para brindarte una experiencia inolvidable. ¡Tu descanso comienza aquí!
-      </h1>
+      </h2>
+      <a class="btn btn-primary fw-bold" href="#lugaresTuristicos"
+        >Ver lugares turisticos</a
+      >
     </div>
   </section>
 </header>
 <div class="container mt-4">
   <!-- Filtro -->
-  <div class="card p-3 mb-4">
+  <div class="card p-3 mb-4 shadow-lg rounded">
     <div class="row">
       <div class="col-md-5">
         <label for="destino">¿A qué lugar deseas ir?</label>
@@ -68,12 +71,7 @@
         <div class="row">
           <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesDisponibles">
             <div class="card shadow-sm">
-              <img
-                [src]="hotel.imagenes"
-                alt="hotel"
-                class="card-img-top"
-                height="200"
-              />
+              <img [src]="hotel.imagenes" alt="hotel" height="200" />
               <div class="card-body">
                 <h5 class="card-title">{{ hotel.nombre }}</h5>
                 <p><strong>Ubicación:</strong> {{ hotel.ubicacion }}</p>
@@ -262,7 +260,7 @@
     </div>
   </div>
 
-  <div class="container mt-4">
+  <div class="container mt-4" id="lugaresTuristicos">
     <h2>Lugares Turisticos</h2>
     <br />
     <div class="row">
