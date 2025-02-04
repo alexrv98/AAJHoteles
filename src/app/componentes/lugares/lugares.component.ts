@@ -29,8 +29,13 @@ export class LugaresComponent implements OnInit {
     fechaFin: '',
     huespedes: 1,
     habitaciones: 1,
-    dias: 0
+    dias: 0,
+    orden: '',
+    precioMin: 0,
+    precioMax: Infinity,
+
   };
+  habitacionesFiltradas: any[] = [];
 
   habitacionSeleccionada: any = null;   
   totalReserva: number = 0; 
@@ -72,7 +77,6 @@ export class LugaresComponent implements OnInit {
       this.filtros.ubicacion = lugarSeleccionado.ubicacion;
     }
   }
-
   buscarHoteles(): void {
     this.hotelesDisponibles = [];
     this.hotelSeleccionado = null;
@@ -85,7 +89,6 @@ export class LugaresComponent implements OnInit {
         if (response.status === 'success') {
           this.hotelesDisponibles = response.data;
   
-          // Obtener comentarios de cada hotel
           this.hotelesDisponibles.forEach(hotel => {
             this.lugaresService.obtenerComentarios(hotel.id).subscribe({
               next: (comentariosResponse) => {
@@ -96,6 +99,8 @@ export class LugaresComponent implements OnInit {
                   hotel.comentarios = [];
                   hotel.promedioEstrellas = 0;
                 }
+  
+                this.ordenarHoteles();
               },
               error: (error) => {
                 console.error('Error al obtener comentarios:', error);
@@ -113,27 +118,55 @@ export class LugaresComponent implements OnInit {
       },
     });
   }
-  
+  ordenarHoteles(): void {
+    if (this.filtros.orden === 'mejoresReseñas') {
+      this.hotelesDisponibles.sort((a, b) => b.promedioEstrellas - a.promedioEstrellas);
+    }
+  }
+      
   calcularPromedioEstrellas(comentarios: any[]): number {
     if (comentarios.length === 0) return 0;
     const sumaEstrellas = comentarios.reduce((sum, comentario) => sum + comentario.calificacion, 0);
     return sumaEstrellas / comentarios.length;
   }
   
-  // Función para convertir el número de estrellas en un array de estrellas para mostrar en el HTML
   getStarArray(promedio: number): number[] {
     return Array(Math.round(promedio)).fill(1);
   }
   
+  filtrarHabitacionesPorPrecio() {
+    if (!this.hotelSeleccionado) return;
+  
+    if (this.filtros.precioMin == null && this.filtros.precioMax == null) {
+      this.habitacionesFiltradas = [...this.habitacionesDisponibles];
+      return;
+    }
+  
+    const precioMin = this.filtros.precioMin ?? 0;
+    const precioMax = this.filtros.precioMax ?? Infinity;
+  
+    // Aplicar el filtro solo si los valores han sido ingresados
+    this.habitacionesFiltradas = this.habitacionesDisponibles.filter(habitacion =>
+      habitacion.precio >= precioMin && habitacion.precio <= precioMax
+    );
+  }
+  
+  
   
 
   verHabitaciones(hotel: any): void {
-    this.hotelSeleccionado = hotel; 
+    this.hotelSeleccionado = hotel;
+    
+    this.filtros.precioMin = 0;
+    this.filtros.precioMax = 0;
+  
     this.lugaresService.obtenerHabitacionesDisponibles(hotel.id, this.filtros).subscribe({
       next: (response) => {
         if (response.status === 'success' && response.data) {
           this.habitacionesDisponibles = response.data.mejorOpcion;
           this.otrasHabitacionesDisponibles = response.data.otrasHabitaciones;
+          
+          this.habitacionesFiltradas = [...this.habitacionesDisponibles];
         } else {
           console.error('Error al obtener habitaciones:', response.message);
         }
@@ -143,6 +176,7 @@ export class LugaresComponent implements OnInit {
       },
     });
   }
+  
   
   
   agregarHabitacion(habitacion: any): void {
