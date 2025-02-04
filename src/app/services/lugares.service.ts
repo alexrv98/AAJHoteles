@@ -5,10 +5,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LugaresService {
-  private apiUrl = 'http://192.168.1.102/HTLES/AAJHoteles/apisHoteles';
+  private apiUrl = 'http://localhost/apisHoteles';
 
   constructor(private http: HttpClient) {}
-  //hioa
 
   obtenerLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
