@@ -23,6 +23,7 @@ export class LugaresComponent implements OnInit {
   isLoggedIn: boolean = false;
   categorias: any[] = [];
 
+
   filtros = {
     destino: '',
     ubicacion: '',
@@ -55,6 +56,8 @@ export class LugaresComponent implements OnInit {
       this.isLoggedIn = true;
     }
   }
+
+
 
   obtenerCategorias(): void {
     this.lugaresService.obtenerCategorias().subscribe({
@@ -116,12 +119,17 @@ export class LugaresComponent implements OnInit {
       this.filtros.ubicacion = lugarSeleccionado.ubicacion;
     }
   }
+
+
+
   buscarHoteles(): void {
     this.hotelesDisponibles = [];
     this.hotelSeleccionado = null;
     this.habitacionesDisponibles = [];
     this.otrasHabitacionesDisponibles = [];
     this.habitacionSeleccionada = null;
+
+
 
     this.lugaresService.obtenerHotelesDisponibles(this.filtros).subscribe({
       next: (response) => {
