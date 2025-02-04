@@ -9,15 +9,11 @@
 <div class="container mt-4">
   <!-- Filtro -->
   <div class="card p-3 mb-4">
+
     <div class="row">
       <div class="col-md-5">
         <label for="destino">¿A qué lugar deseas ir?</label>
-        <select
-          class="form-control"
-          id="destino"
-          [(ngModel)]="filtros.destino"
-          (change)="actualizarUbicacion()"
-        >
+        <select class="form-control" id="destino" [(ngModel)]="filtros.destino" (change)="actualizarUbicacion()">
           <option *ngFor="let lugar of lugares" [value]="lugar.id">
             {{ lugar.nombre }} - {{ lugar.ubicacion }}
           </option>
@@ -25,31 +21,15 @@
       </div>
       <div class="col-md-2">
         <label for="fechaInicio">Fecha de entrada</label>
-        <input
-          type="date"
-          class="form-control"
-          id="fechaInicio"
-          [(ngModel)]="filtros.fechaInicio"
-        />
+        <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="filtros.fechaInicio" />
       </div>
       <div class="col-md-2">
         <label for="fechaFin">Fecha de salida</label>
-        <input
-          type="date"
-          class="form-control"
-          id="fechaFin"
-          [(ngModel)]="filtros.fechaFin"
-        />
+        <input type="date" class="form-control" id="fechaFin" [(ngModel)]="filtros.fechaFin" />
       </div>
       <div class="col-md-2">
         <label for="huespedes">Huéspedes</label>
-        <input
-          type="number"
-          class="form-control"
-          id="huespedes"
-          [(ngModel)]="filtros.huespedes"
-          min="1"
-        />
+        <input type="number" class="form-control" id="huespedes" [(ngModel)]="filtros.huespedes" min="1" />
       </div>
       <div class="col-md-1 d-flex align-items-end">
         <button class="btn btn-primary w-100" (click)="buscarHoteles()">
@@ -57,6 +37,16 @@
         </button>
       </div>
     </div>
+
+    <!-- Mostrar este filtro solo cuando se listan hoteles y no cuando se ven habitaciones -->
+    <div *ngIf="hotelesDisponibles.length > 0 && !hotelSeleccionado" class="col-md-3 mt-3">
+      <label for="ordenarPor">Ordenar por</label>
+      <select class="form-control" id="ordenarPor" [(ngModel)]="filtros.orden" (change)="ordenarHoteles()">
+        <option value="">Sin orden</option>
+        <option value="mejoresReseñas">Mejores reseñas</option>
+      </select>
+    </div>
+
   </div>
 
   <div class="d-flex">
@@ -66,12 +56,7 @@
         <div class="row">
           <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesDisponibles">
             <div class="card shadow-sm">
-              <img
-                [src]="hotel.imagenes"
-                alt="hotel"
-                class="card-img-top"
-                height="200"
-              />
+              <img [src]="hotel.imagenes" alt="hotel" class="card-img-top" height="200" />
               <div class="card-body">
                 <h5 class="card-title">{{ hotel.nombre }}</h5>
                 <p><strong>Ubicación:</strong> {{ hotel.ubicacion }}</p>
@@ -82,36 +67,21 @@
                   <div class="d-flex align-items-center mb-2">
                     <p class="mb-0"><strong>Calificación promedio:</strong></p>
                     <div class="ms-2">
-                      <span
-                        *ngFor="
+                      <span *ngFor="
                           let star of getStarArray(hotel.promedioEstrellas)
-                        "
-                        class="text-warning"
-                        >⭐</span
-                      >
-                      <span class="ms-1 text-muted"
-                        >({{ hotel.promedioEstrellas.toFixed(1) }})</span
-                      >
+                        " class="text-warning">⭐</span>
+                      <span class="ms-1 text-muted">({{ hotel.promedioEstrellas.toFixed(1) }})</span>
                     </div>
                   </div>
-                  <a
-                    [routerLink]="['/comentario', hotel.id]"
-                    class="ms-2 text-primary fw-bold"
-                    style="cursor: pointer"
-                  >
+                  <a [routerLink]="['/comentario', hotel.id]" class="ms-2 text-primary fw-bold" style="cursor: pointer">
                     Ver reseñas
                   </a>
                 </div>
-                <div
-                  *ngIf="hotel.comentarios && hotel.comentarios.length === 0"
-                >
+                <div *ngIf="hotel.comentarios && hotel.comentarios.length === 0">
                   <p class="text-muted">No hay reseñas aún.</p>
                 </div>
 
-                <button
-                  class="btn btn-primary w-100"
-                  (click)="verHabitaciones(hotel)"
-                >
+                <button class="btn btn-primary w-100" (click)="verHabitaciones(hotel)">
                   Ver habitaciones
                 </button>
               </div>
@@ -119,34 +89,52 @@
           </div>
         </div>
       </div>
-
-      <!-- Habitaciones disponibles -->
-      <div *ngIf="habitacionesDisponibles.length > 0 && hotelSeleccionado">
-        <h3>Habitaciones disponibles en {{ hotelSeleccionado.nombre }}</h3>
-        <h3>Mejor opción</h3>
+      <div *ngIf="hotelSeleccionado" class="card p-3 mb-4">
+        <h5>Filtrar por precio</h5>
         <div class="row">
-          <div
-            class="col-md-4 mb-3"
-            *ngFor="let habitacion of habitacionesDisponibles"
-          >
+          <div class="col-md-5">
+            <label for="precioMin">Precio mínimo</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              id="precioMin" 
+              [(ngModel)]="filtros.precioMin"
+              (input)="filtrarHabitacionesPorPrecio()" 
+              [min]="0" 
+              placeholder="Mínimo"
+            />
+          </div>
+          <div class="col-md-5">
+            <label for="precioMax">Precio máximo</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              id="precioMax" 
+              [(ngModel)]="filtros.precioMax"
+              (input)="filtrarHabitacionesPorPrecio()" 
+              [min]="0"
+              placeholder="Máximo"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Habitaciones disponibles -->
+      <div *ngIf="habitacionesFiltradas.length > 0 && hotelSeleccionado">
+        <h3>Habitaciones disponibles en {{ hotelSeleccionado.nombre }}</h3>
+        <h3>Mejor Opción</h3>
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let habitacion of habitacionesFiltradas">
             <div class="card shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">
                   Habitación {{ habitacion.numero_habitacion }}
                 </h5>
                 <p><strong>Tipo:</strong> {{ habitacion.tipo_habitacion }}</p>
-                <p>
-                  <strong>Capacidad:</strong>
-                  {{ habitacion.capacidad }} personas
-                </p>
+                <p><strong>Capacidad:</strong> {{ habitacion.capacidad }} personas</p>
                 <p><strong>Camas:</strong> {{ habitacion.camas }}</p>
-                <p>
-                  <strong>Precio por noche:</strong> ${{ habitacion.precio }}
-                </p>
-                <button
-                  class="btn btn-success w-100"
-                  (click)="agregarHabitacion(habitacion)"
-                >
+                <p><strong>Precio por noche:</strong> ${{ habitacion.precio }}</p>
+                <button class="btn btn-success w-100" (click)="agregarHabitacion(habitacion)">
                   Agregar
                 </button>
               </div>
@@ -154,15 +142,18 @@
           </div>
         </div>
       </div>
+      
+      <!-- Mensaje si no hay habitaciones disponibles en el rango de precios -->
+      <div *ngIf="habitacionesFiltradas.length === 0 && hotelSeleccionado" class="alert alert-warning mt-3">
+        No hay habitaciones disponibles en este rango de precios.
+      </div>
+      
 
       <!-- Otras habitaciones disponibles -->
       <div *ngIf="otrasHabitacionesDisponibles.length > 0">
         <h4>Otras habitaciones disponibles:</h4>
         <div class="row">
-          <div
-            class="col-md-4 mb-3"
-            *ngFor="let habitacion of otrasHabitacionesDisponibles"
-          >
+          <div class="col-md-4 mb-3" *ngFor="let habitacion of otrasHabitacionesDisponibles">
             <div class="card shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">
@@ -177,10 +168,7 @@
                 <p>
                   <strong>Precio por noche:</strong> ${{ habitacion.precio }}
                 </p>
-                <button
-                  class="btn btn-success w-100"
-                  (click)="agregarHabitacion(habitacion)"
-                >
+                <button class="btn btn-success w-100" (click)="agregarHabitacion(habitacion)">
                   Agregar
                 </button>
               </div>
@@ -191,11 +179,8 @@
     </div>
 
     <!-- Cuadro de resumen fijo a la derecha -->
-    <div
-      *ngIf="habitacionSeleccionada"
-      class="position-fixed top-50 end-0 translate-middle-y me-4"
-      style="width: 300px"
-    >
+    <div *ngIf="habitacionSeleccionada" class="position-fixed top-50 end-0 translate-middle-y me-4"
+      style="width: 300px">
       <div class="card shadow-lg">
         <div class="card-body">
           <h5>Resumen de la reserva</h5>
@@ -205,27 +190,19 @@
           </p>
           <p>
             <strong>Precio por noche:</strong> ${{
-              habitacionSeleccionada.precio
+            habitacionSeleccionada.precio
             }}
           </p>
           <p>
             <strong>Total por {{ filtros.dias }} días:</strong> ${{
-              totalReserva
+            totalReserva
             }}
           </p>
 
-          <button
-            *ngIf="isLoggedIn"
-            class="btn btn-primary w-100 mb-2"
-            (click)="confirmarReserva()"
-          >
+          <button *ngIf="isLoggedIn" class="btn btn-primary w-100 mb-2" (click)="confirmarReserva()">
             Continuar con la reserva
           </button>
-          <button
-            *ngIf="!isLoggedIn"
-            class="btn btn-primary w-100 mb-2"
-            (click)="confirmarReserva()"
-          >
+          <button *ngIf="!isLoggedIn" class="btn btn-primary w-100 mb-2" (click)="confirmarReserva()">
             Iniciar sesión para reservar
           </button>
 
@@ -250,10 +227,7 @@
         </p>
         <p><strong>Duración:</strong> {{ reserva.dias }} días</p>
         <p><strong>Total a pagar:</strong> ${{ reserva.total }}</p>
-        <button
-          class="btn btn-primary"
-          (click)="reservarHabitacion(reserva.habitacion)"
-        >
+        <button class="btn btn-primary" (click)="reservarHabitacion(reserva.habitacion)">
           Reservar
         </button>
       </div>
@@ -272,12 +246,8 @@
             <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
             <p>{{ lugar.ubicacion }}</p>
 
-            <a
-              [routerLink]="['/lugar-hoteles', lugar.id]"
-              routerLinkActive="router-link-active"
-              class="btn btn-primary w-100"
-              >Más información</a
-            >
+            <a [routerLink]="['/lugar-hoteles', lugar.id]" routerLinkActive="router-link-active"
+              class="btn btn-primary w-100">Más información</a>
           </div>
         </div>
       </div>

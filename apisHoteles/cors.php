@@ -6,5 +6,5 @@ header("Content-Type: application/json");
 
 // Para manejar las peticiones OPTIONS de CORS
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    exit(0); // Responde con un 200 OK sin cuerpo
+    exit(0); 
 }
