@@ -88,16 +88,13 @@
         <div class="row">
           <div class="col-md-4 mb-3" *ngFor="let hotel of hotelesDisponibles">
             <div class="card shadow-sm">
-              <<<<<<< HEAD
-              <img [src]="hotel.imagenes" alt="hotel" height="200" />
-              =======
               <img
                 [src]="hotel.imagenes"
                 alt="hotel"
                 class="card-img-top"
                 height="200"
               />
-              >>>>>>> 85175b0a86dbbeb77c18510e68bff0de624385c5
+
               <div class="card-body">
                 <h5 class="card-title">{{ hotel.nombre }}</h5>
                 <p><strong>Ubicación:</strong> {{ hotel.ubicacion }}</p>

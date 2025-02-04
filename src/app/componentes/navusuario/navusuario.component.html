@@ -1,13 +1,14 @@
 <nav class="navbar navbar-light bg-light">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center"
+  >
     <a [routerLink]="['/']">
-      <img class="brand-logo" src="assets/logoH.png" alt="logo" height="70" />
+      <img class="brand-logo" src="assets/logoH.png" alt="logo" height="50" />
     </a>
 
     <div>
       <!-- Si el usuario no está autenticado, muestra estos botones -->
       <ng-container *ngIf="!isAuthenticated">
-       
         <button
           class="btn btn-outline-primary me-2"
           [routerLink]="['/login']"

@@ -5,7 +5,12 @@
     >
       <div class="d-flex align-items-center">
         <a routerLink="/admin" class="d-flex align-items-center">
-          <img class="brand-logo me-3" src="assets/logoH.png" alt="logo" />
+          <img
+            class="brand-logo me-3"
+            src="assets/logoH.png"
+            alt="logo"
+            height="50"
+          />
         </a>
         <a routerLink="/tipoHabitaciones" class="nav-link custom-link"
           >Habitación</a
@@ -17,11 +22,11 @@
 
       <div>
         <button
-        class="btn btn-outline-danger me-2"
-        [routerLink]="['/']"
-        (click)="logout()"
-      >
-        Cerrar sesión
+          class="btn btn-outline-danger me-2"
+          [routerLink]="['/']"
+          (click)="logout()"
+        >
+          Cerrar sesión
         </button>
       </div>
     </div>
