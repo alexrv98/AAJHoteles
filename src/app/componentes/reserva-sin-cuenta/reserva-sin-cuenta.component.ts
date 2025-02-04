@@ -5,6 +5,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NavusuarioComponent } from '../navusuario/navusuario.component';
 import { ReservaService } from '../../services/reserva.service';
 import Swal from 'sweetalert2';
+import emailjs from '@emailjs/browser';
+
+
 declare var paypal: any;
 
 @Component({
@@ -96,7 +99,7 @@ export class ReservaSinCuentaComponent implements OnInit {
           confirmButtonText: 'Aceptar'
         });
       }
-    }).render('#paypal-button-container'); // Renderiza el botón en el div del HTML
+    }).render('#paypal-button-container'); 
   }
 
   confirmarReservaSinCuenta(): void {
@@ -109,7 +112,7 @@ export class ReservaSinCuentaComponent implements OnInit {
       });
       return;
     }
-
+  
     if (!this.reserva.pagoConfirmado) {
       Swal.fire({
         title: 'Pago requerido',
@@ -119,13 +122,42 @@ export class ReservaSinCuentaComponent implements OnInit {
       });
       return;
     }
-
+  
+    const emailParams = {
+      to_name: this.reserva.nombre,  
+      to_email: this.reserva.email,  
+      habitacion: `${this.habitacion.numero_habitacion} - ${this.habitacion.tipo_habitacion}`,  
+      fechaInicio: this.fechaInicio?.toLocaleDateString(),  
+      fechaFin: this.fechaFin?.toLocaleDateString(),  
+      totalReserva: this.reserva.totalReserva  
+    };
+    
+    emailjs.send('service_w4h509a', 'template_bbuk6lq', emailParams, 'P_O_qh7Hz8_pXihT8')
+      .then((response) => {
+        console.log('Correo enviado con éxito:', response);
+      })
+      .catch((error) => {
+        console.error('Error al enviar el correo:', error);
+      });
+    
+    
+  
+    // Enviar el correo usando EmailJS
+    emailjs.send('service_id', 'template_id', emailParams, 'user_id')
+      .then((response) => {
+        console.log('Correo enviado:', response);
+      })
+      .catch((error) => {
+        console.error('Error al enviar correo:', error);
+      });
+  
+    // Guardar la reserva
     this.reservaService.reservarSinCuenta(this.reserva).subscribe(
       response => {
         console.log('Reserva realizada con éxito:', response);
         Swal.fire({
           title: '¡Reserva Exitosa!',
-          text: 'Tu reserva ha sido confirmada correctamente.',
+          text: 'Tu reserva ha sido confirmada correctamente. Se te ha enviado un correo con los detalles.',
           icon: 'success',
           confirmButtonText: 'Aceptar'
         }).then(() => {
@@ -137,4 +169,5 @@ export class ReservaSinCuentaComponent implements OnInit {
       }
     );
   }
+  
 }
