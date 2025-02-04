@@ -36,8 +36,8 @@ export class LugaresComponent implements OnInit {
     precioMax: Infinity,
     categoria: null,
   };
-
   habitacionesFiltradas: any[] = [];
+
   habitacionSeleccionada: any = null;
   totalReserva: number = 0;
 
@@ -158,7 +158,11 @@ export class LugaresComponent implements OnInit {
       },
     });
   }
-
+  ordenarHoteles(): void {
+    if (this.filtros.orden === 'mejoresReseñas') {
+      this.hotelesDisponibles.sort((a, b) => b.promedioEstrellas - a.promedioEstrellas);
+    }
+  }
   calcularPromedioEstrellas(comentarios: any[]): number {
     if (comentarios.length === 0) return 0;
     const sumaEstrellas = comentarios.reduce((sum, comentario) => sum + comentario.calificacion, 0);

@@ -320,28 +320,46 @@
     </div>
   </div>
 
-  <div class="container mt-4">
-    <h2>Lugares Turisticos</h2>
-    <br />
+ <!-- Filtro por categoría de lugar turístico -->
+ <div class="col-md-4">
+  <div class="card p-3 mb-4">
     <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let lugar of lugaresFiltrados">
-        <div class="card shadow-sm">
-          <img [src]="lugar.imagen" alt="lugar" class="card" height="200" />
-          <div class="card-body">
-            <h5 class="card-title">{{ lugar.nombre }}</h5>
-            <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
-            <p>{{ lugar.ubicacion }}</p>
+      <div class="col-md-12">
+        <label for="categoria">Filtrar por categoría</label>
+        <select [(ngModel)]="filtros.categoria" (change)="filtrarPorCategoria()">
+          <option *ngFor="let categoria of categorias" [value]="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
 
-              <a
-                [routerLink]="['/lugar-hoteles', lugar.id]"
-                routerLinkActive="router-link-active"
-                class="btn btn-primary w-100"
-                >Más información</a
-              >
-            </div>
-          </div>
+<!-- Lugares filtrados por categoría -->
+<div class="col-md-12">
+  <h2>Lugares Turísticos</h2>
+  <br />
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let lugar of lugaresFiltrados">
+      <div class="card shadow-sm">
+        <img [src]="lugar.imagen" alt="lugar" class="card" height="200" />
+        <div class="card-body">
+          <h5 class="card-title">{{ lugar.nombre }}</h5>
+          <p><i class="bi bi-geo-alt"></i> {{ lugar.descripcion }}</p>
+          <p>{{ lugar.ubicacion }}</p>
+
+          <a
+            [routerLink]="['/lugar-hoteles', lugar.id]"
+            routerLinkActive="router-link-active"
+            class="btn btn-primary w-100"
+            >Más información</a
+          >
         </div>
       </div>
     </div>
   </div>
+</div>
+</div>
+
 
