@@ -11,15 +11,13 @@ export class ReservacionService {
   constructor(private http: HttpClient) {}
 
   private crearHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken'); 
-    console.log("Token enviado:", token);  
+    const token = localStorage.getItem('authToken');
+    console.log('Token enviado:', token);
     return new HttpHeaders({
       Authorization: token ? `Bearer ${token}` : '',
       'Content-Type': 'application/json',
     });
   }
-
-  
 
   getLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`, {
@@ -35,11 +33,13 @@ export class ReservacionService {
   }
 
   getHabitaciones(hotel_id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/listHabitaciones.php?hotel_id=${hotel_id}`, {
-      headers: this.crearHeaders(),
-    });
+    return this.http.get(
+      `${this.apiUrl}/listHabitaciones.php?hotel_id=${hotel_id}`,
+      {
+        headers: this.crearHeaders(),
+      }
+    );
   }
-
 
   getTiposHabitacion(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listTipoHabitacion.php`, {
@@ -60,7 +60,6 @@ export class ReservacionService {
       { headers: this.crearHeaders() }
     );
   }
-
 
   eliminarReservacion(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminarReservacion.php/${id}`, {

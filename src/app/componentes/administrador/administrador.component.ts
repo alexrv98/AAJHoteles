@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
-
+//
 @Component({
   selector: 'app-administrador',
   imports: [CommonModule, FormsModule, RouterLink, HomeComponent],
