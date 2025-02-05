@@ -185,11 +185,11 @@
         <h3>Mejor Opción</h3>
         <div class="row">
           <div
-            class="col-md-4 mb-3"
+            class="col-md-4 mb-3 d-flex"
             *ngFor="let habitacion of habitacionesFiltradas"
           >
-            <div class="card shadow-sm">
-              <div class="card-body">
+            <div class="card shadow-sm lugar-card ">
+              <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
                   Habitación {{ habitacion.numero_habitacion }}
                 </h5>
@@ -202,12 +202,14 @@
                 <p>
                   <strong>Precio por noche:</strong> ${{ habitacion.precio }}
                 </p>
+                <div class="mt-auto">
                 <button
                   class="btn btn-success w-100"
                   (click)="agregarHabitacion(habitacion)"
                 >
                   Agregar
                 </button>
+              </div>
               </div>
             </div>
           </div>
@@ -227,11 +229,11 @@
         <h4>Otras habitaciones disponibles:</h4>
         <div class="row">
           <div
-            class="col-md-4 mb-3"
+            class="col-md-4 mb-3 d-flex"
             *ngFor="let habitacion of otrasHabitacionesDisponibles"
           >
-            <div class="card shadow-sm">
-              <div class="card-body">
+            <div class="card shadow-sm lugar-card">
+              <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
                   Habitación {{ habitacion.numero_habitacion }}
                 </h5>
@@ -244,12 +246,14 @@
                 <p>
                   <strong>Precio por noche:</strong> ${{ habitacion.precio }}
                 </p>
+                <div class="mt-auto">
                 <button
                   class="btn btn-success w-100"
                   (click)="agregarHabitacion(habitacion)"
                 >
                   Agregar
                 </button>
+              </div>
               </div>
             </div>
           </div>
@@ -263,8 +267,8 @@
       class="position-fixed top-50 end-0 translate-middle-y me-4"
       style="width: 300px"
     >
-      <div class="card shadow-lg">
-        <div class="card-body">
+      <div class="card shadow-lg d-flex lugar-card">
+        <div class="card-body d-flex flex-column">
           <h5>Resumen de la reserva</h5>
           <p>
             <strong>Habitación:</strong>
@@ -280,7 +284,6 @@
               totalReserva
             }}
           </p>
-
           <button
             *ngIf="isLoggedIn"
             class="btn btn-primary w-100 mb-2"
@@ -288,6 +291,7 @@
           >
             Continuar con la reserva
           </button>
+          <div class="mt-auto">
           <button
             *ngIf="!isLoggedIn"
             class="btn btn-primary w-100 mb-2"
@@ -299,6 +303,7 @@
           <button class="btn btn-secondary w-100" (click)="reservarSinCuenta()">
             Continuar sin cuenta
           </button>
+        </div>
         </div>
       </div>
     </div>
