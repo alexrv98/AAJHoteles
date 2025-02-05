@@ -12,6 +12,7 @@ export class LugaresService {
   obtenerLugares(): Observable<any> {
     return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php`);
   }
+  
   obtenerHotelesDisponibles(filtros: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/buscarHoteles.php`, filtros);
   }
@@ -29,13 +30,10 @@ export class LugaresService {
   }
 
   obtenerLugaresPorCategoria(categoriaId: number): Observable<any> {
-    console.log('Consultando lugares por categoría:', categoriaId); // Verificar el ID de categoría
-    return this.http.get(
-      `${this.apiUrl}/listLugaresTuristicos.php?categoria_id=${categoriaId}`
-    );
+    console.log("Consultando lugares por categoría:", categoriaId);  
+    return this.http.get(`${this.apiUrl}/listLugaresTuristicos.php?categoria_id=${categoriaId}`);
   }
 
-  // Nuevo método para obtener comentarios de un hotel específico
   obtenerComentarios(hotel_id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/comentarios.php?hotel_id=${hotel_id}`);
   }

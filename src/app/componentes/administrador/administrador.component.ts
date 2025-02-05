@@ -18,6 +18,7 @@ export class AdministradorComponent implements OnInit {
   mostrarModal: boolean = false;
   isEditMode: boolean = false;
   mostrarModalAgregar: boolean = false;
+  categorias: any[] = [];
   nuevoLugar: any = {
     nombre: '',
     descripcion: '',
@@ -29,6 +30,7 @@ export class AdministradorComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerLugares();
+    this.obtenerCategorias();
   }
   abrirModalAgregar(): void {
     this.isEditMode = false;
@@ -37,8 +39,24 @@ export class AdministradorComponent implements OnInit {
       descripcion: '',
       ubicacion: '',
       imagen: '',
+      categoria_id: null,
     };
     this.mostrarModalAgregar = true;
+  }
+
+  obtenerCategorias(): void {
+    this.lugaresService.obtenerCategorias().subscribe({
+      next: (response) => {
+        if (response.status === 'success') {
+          this.categorias = response.data;
+        } else {
+          console.error('Error al obtener categorías:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error en la petición de categorías:', error);
+      },
+    });
   }
 
   cerrarModalAgregar(): void {

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import{trigger, style, animate, transition} from '@angular/animations';
+//
 
 @Component({
   selector: 'app-lugares',
@@ -11,6 +13,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, RouterModule, FormsModule, RouterLink],
   templateUrl: './lugares.component.html',
   styleUrls: ['./lugares.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class LugaresComponent implements OnInit {
   lugares: any[] = [];
@@ -22,6 +32,7 @@ export class LugaresComponent implements OnInit {
   reserva: any = null;
   isLoggedIn: boolean = false;
   categorias: any[] = [];
+
 
   filtros = {
     destino: '',
@@ -55,6 +66,8 @@ export class LugaresComponent implements OnInit {
       this.isLoggedIn = true;
     }
   }
+
+
 
   obtenerCategorias(): void {
     this.lugaresService.obtenerCategorias().subscribe({
@@ -116,12 +129,17 @@ export class LugaresComponent implements OnInit {
       this.filtros.ubicacion = lugarSeleccionado.ubicacion;
     }
   }
+
+
+
   buscarHoteles(): void {
     this.hotelesDisponibles = [];
     this.hotelSeleccionado = null;
     this.habitacionesDisponibles = [];
     this.otrasHabitacionesDisponibles = [];
     this.habitacionSeleccionada = null;
+
+
 
     this.lugaresService.obtenerHotelesDisponibles(this.filtros).subscribe({
       next: (response) => {
@@ -228,7 +246,7 @@ export class LugaresComponent implements OnInit {
       console.error("No hay habitación seleccionada.");
       return;
     }
-
+//
     // Guardar la reserva pendiente
     localStorage.setItem('reservaPendiente', JSON.stringify({
       filtros: this.filtros,
@@ -280,6 +298,12 @@ export class LugaresComponent implements OnInit {
     console.log('Reservando habitación', habitacion);
   }
 
+  scrollLeft() {
+    document.getElementById('scrollContainer')!.scrollBy({ left: -300, behavior: 'smooth' });
+  }
 
+  scrollRight() {
+    document.getElementById('scrollContainer')!.scrollBy({ left: 300, behavior: 'smooth' });
+  }
 
 }
