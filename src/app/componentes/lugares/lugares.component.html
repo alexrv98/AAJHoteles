@@ -125,7 +125,7 @@
                   </div>
                   <a
                     [routerLink]="['/comentario', hotel.id]"
-                    class="ms-2 text-primary fw-bold"
+                    class="ms-2 text-primary fw-bold "
                     style="cursor: pointer"
                   >
                     Ver reseñas
@@ -136,13 +136,14 @@
                 >
                   <p class="text-muted">No hay reseñas aún.</p>
                 </div>
-
+                <div class="mt-auto">
                 <button
                   class="btn btn-primary w-100"
                   (click)="verHabitaciones(hotel)"
                 >
                   Ver habitaciones
                 </button>
+                </div>
               </div>
             </div>
           </div>
