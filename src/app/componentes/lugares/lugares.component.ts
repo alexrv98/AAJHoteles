@@ -298,6 +298,12 @@ export class LugaresComponent implements OnInit {
     console.log('Reservando habitación', habitacion);
   }
 
+  scrollLeft() {
+    document.getElementById('scrollContainer')!.scrollBy({ left: -300, behavior: 'smooth' });
+  }
 
+  scrollRight() {
+    document.getElementById('scrollContainer')!.scrollBy({ left: 300, behavior: 'smooth' });
+  }
 
 }
